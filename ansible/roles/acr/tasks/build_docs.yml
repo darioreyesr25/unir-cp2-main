@@ -1,0 +1,38 @@
+---
+- name: Ensure repository is present on the VM
+  git:
+    repo: "https://github.com/darioreyesr25/unir-cp2.git"
+    dest: "/opt/unir-cp2"
+    version: main
+
+- name: Install dependencies for MkDocs
+  apt:
+    name:
+      - python3-pip
+    state: present
+    update_cache: no
+  become: yes
+
+- name: Install required system dependencies for WeasyPrint
+  apt:
+    name:
+      - libpango1.0-0
+      - libpangocairo-1.0-0
+      - libcairo2
+    state: present
+    update_cache: no
+  become: yes
+
+- name: Install project dependencies
+  pip:
+    requirements: "/opt/unir-cp2/requirements.txt"
+
+- name: Build MkDocs static site
+  command:
+    cmd: mkdocs build
+    chdir: "/opt/unir-cp2"
+
+- name: Build Podman image on the VM
+  command:
+    cmd: podman build -t "{{ image_name_docs }}:{{ image_tag_docs }}" -f /opt/unir-cp2/Dockerfile.docs
+    chdir: "/opt/unir-cp2"

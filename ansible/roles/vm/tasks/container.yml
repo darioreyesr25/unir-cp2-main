@@ -1,0 +1,16 @@
+- name: Log into Azure Container Registry (ACR)
+  containers.podman.podman_login:
+    registry: "{{ acr_name }}.azurecr.io"
+    username: "{{ acr_username }}"
+    password: "{{ acr_password }}"
+
+- name: Run container from ACR image with SSL and Basic Auth
+  containers.podman.podman_container:
+    name: mkdocs_container
+    image: "{{ acr_name }}.azurecr.io/{{ image_name }}:{{ image_tag }}"
+    state: started
+    restart_policy: always
+    ports:
+      - "443:443"
+    volume:
+      - "/etc/nginx/auth/htpasswd.users:/etc/nginx/.htpasswd:ro"

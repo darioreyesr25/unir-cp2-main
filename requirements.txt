@@ -1,0 +1,7 @@
+mkdocs
+mkdocs-material
+pymdown-extensions
+mkdocs-markdownextradata-plugin
+mkdocs-awesome-pages-plugin
+mkdocs-with-pdf
+mkdocs-drawio
