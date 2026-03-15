@@ -1,6 +1,8 @@
 
 # Action to deploy the mkdocs documentation to the branch gh-pages.
 name: On Push Deploy Documentation # Name of the workflow
+permissions:
+  contents: write
 on:
   push:
     branches:
