@@ -25,6 +25,15 @@ jobs: # Jobs to run
         steps: # Steps to run
         - name: Checkout repo # Name of the step
           uses: actions/checkout@v4 # Action to run
+          with:
+            persist-credentials: true
+            fetch-depth: 0
+
+        - name: Configure git user for deploy
+          run: |
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
         - name: Set up Python # Name of the step
           uses: actions/setup-python@v5 # Action to run
           with: # Inputs for the action
@@ -39,4 +48,6 @@ jobs: # Jobs to run
             python -m pip install --upgrade pip
             pip install -r requirements.txt
         - name: Deploy documentation # Name of the step
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: python -m mkdocs gh-deploy --force --clean --verbose # Command to run
