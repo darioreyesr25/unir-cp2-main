@@ -1,6 +1,0 @@
----
-- name: Install Podman
-  apt:
-    name: podman
-    state: present
-    update_cache: yes
