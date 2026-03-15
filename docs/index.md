@@ -2,7 +2,7 @@
 
 :blue_book: Asignatura: **Devops & Cloud**
 
-:fontawesome-solid-user: Alumno: **Carlos Grande Núñez**
+:fontawesome-solid-user: Alumno: **Walter Reyes Rivera**
 
 :material-calendar: Fecha: **23/03/25**
 

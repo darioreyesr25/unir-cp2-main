@@ -1,13 +1,38 @@
-- name: Log into Azure Container Registry (ACR)
-  containers.podman.podman_login:
-    registry: "{{ acr_name }}.azurecr.io"
-    username: "{{ acr_username }}"
-    password: "{{ acr_password }}"
+- name: Debug ACR login variables
+  debug:
+    msg:
+      - "acr_name={{ acr_name | default('<<unset>>') }}"
+      - "acr_login_server={{ acr_login_server | default('<<unset>>') }}"
+      - "acr_username={{ acr_username | default('<<unset>>') }}"
+      - "acr_password length={{ acr_password | default('') | length }}"
+
+- name: Fail if no ACR registry/server is configured
+  fail:
+    msg: |
+      No valid ACR registry hostname could be derived.
+      Ensure the inventory defines either:
+        - acr_login_server (e.g. acrcndcp2dev.azurecr.io)
+        - OR acr_name (e.g. acrcndcp2dev)
+
+      Current values:
+      acr_name={{ acr_name | default('<<unset>>') }}
+      acr_login_server={{ acr_login_server | default('<<unset>>') }}
+  when: (acr_login_server | default('') == '') and (acr_name | default('') == '')
+
+- name: Compute ACR login server hostname
+  set_fact:
+    acr_login_server_resolved: "{{ acr_login_server | default(acr_name ~ '.azurecr.io') }}"
+
+- name: Log into Azure Container Registry (ACR) (timeout 60s)
+  shell: |
+    printf '%s' "{{ acr_password }}" | timeout 60s podman login {{ acr_login_server_resolved }} --username {{ acr_username }} --password-stdin
+  args:
+    executable: /bin/bash
 
 - name: Run container from ACR image with SSL and Basic Auth
   containers.podman.podman_container:
     name: mkdocs_container
-    image: "{{ acr_name }}.azurecr.io/{{ image_name }}:{{ image_tag }}"
+    image: "{{ acr_login_server_resolved }}/{{ image_name }}:{{ image_tag }}"
     state: started
     restart_policy: always
     ports:

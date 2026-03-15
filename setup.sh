@@ -1,12 +1,30 @@
 #!/bin/bash
 
 # Configure only the Resource Group
-RESOURCE_GROUP="rg-weu-cp2-dev"
+RESOURCE_GROUP="rg-cnd-cp2-dev"
+
+# If you want to force a specific ACR name, export it before running this script:
+#   export ACR_NAME=acrcndcp2dev
+# Otherwise the script tries to autodetect it from the RG.
 
 echo "🔍 Fetching Azure resources..."
 
-# Automatically get ACR name from the resource group
-ACR_NAME=$(az acr list --resource-group "$RESOURCE_GROUP" --query "[0].name" -o tsv)
+# Determine ACR name (override via env var if provided)
+if [ -z "${ACR_NAME:-}" ]; then
+  ACR_NAME=$(az acr list --resource-group "$RESOURCE_GROUP" --query "[0].name" -o tsv)
+fi
+
+# If autodetect fails, force a known name (adjust as needed)
+if [ -z "${ACR_NAME:-}" ]; then
+  ACR_NAME="acrcndcp2dev"
+  echo "⚠️  ACR name could not be detected; forcing ACR_NAME=$ACR_NAME"
+fi
+
+# Validate ACR name (must be 5-50 alphanumeric characters)
+if [[ ! "${ACR_NAME}" =~ ^[a-z0-9]{5,50}$ ]]; then
+  echo "⚠️  Invalid ACR_NAME ('$ACR_NAME'); forcing to 'acrcndcp2dev'"
+  ACR_NAME="acrcndcp2dev"
+fi
 
 # Automatically get the VM name from the resource group
 VM_NAME=$(az vm list --resource-group "$RESOURCE_GROUP" --query "[0].name" -o tsv)

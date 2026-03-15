@@ -67,7 +67,7 @@ La publicación de la imagen se automatiza mediante el workflow [`Publish mkdocs
         Siempre puedes ejecutar este comando para recuperar el usuario y la contraseña del ACR.
 
         ```bash
-        az acr credential show --name acrweucp2dev --query "[username, passwords[0].value]" -o tsv
+        az acr credential show --name acrcndcp2dev --query "[username, passwords[0].value]" -o tsv
         ```
 
     ![Workflow form](../assets/images/run-workflow-form.png)

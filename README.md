@@ -37,4 +37,4 @@ El proyecto se organiza en tres grandes bloques: infraestructura, despliegue y d
 ---
 
 📌 **Autor**: *[@darioreyesr25](https://github.com/darioreyesr25)*  
-📌 **Fecha**: *23-03-2025*
+📌 **Fecha**: *15-03-2026*

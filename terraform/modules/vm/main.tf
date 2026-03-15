@@ -13,7 +13,6 @@ resource "azurerm_network_interface" "nic" {
   name                = "${var.vm_name}-nic"
   resource_group_name = var.resource_group
   location            = var.location
-
   ip_configuration {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.subnet.id
@@ -21,6 +20,11 @@ resource "azurerm_network_interface" "nic" {
     private_ip_address_allocation = "Dynamic"
   }
   tags = var.tags
+}
+
+resource "azurerm_network_interface_security_group_association" "nic_nsg_assoc" {
+  network_interface_id      = azurerm_network_interface.nic.id
+  network_security_group_id = azurerm_network_security_group.vm_nsg.id
 }
 
 # Virtual Machine

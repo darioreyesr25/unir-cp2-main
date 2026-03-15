@@ -65,7 +65,7 @@ resource "local_file" "ansible_inventory" {
     vm_name             = var.vm_name
     vm_public_ip        = module.virtual_machine.vm_public_ip
     vm_username         = var.vm_username
-    ssh_private_key     = "~/.ssh/az_unir_rsa"
+    ssh_private_key     = "/home/linux/.ssh/id_rsa"
     python_interpreter  = var.python_interpreter
     acr_name            = "${var.acr_name}${var.environment}"
     acr_login_server    = "${var.acr_name}${var.environment}.azurecr.io"

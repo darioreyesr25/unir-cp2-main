@@ -6,3 +6,7 @@
     - vm
   vars_files:
       - ./vars.yml
+  tasks:
+    - name: Confirm playbook completed
+      debug:
+        msg: "Playbook completed successfully."

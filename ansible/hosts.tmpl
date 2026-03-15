@@ -2,21 +2,24 @@ all:
   children:
     azure_vm:
       hosts:
-        vm-weu-cp2-docs:
-          ansible_host: 52.233.185.96
-          ansible_user: darioreyesr25
-          ansible_ssh_private_key_file: ~/.ssh/az_unir_rsa
-          ansible_python_interpreter: "{{ lookup('env', 'VIRTUAL_ENV') + '/bin/python' }}"
+        ${vm_name}:
+          ansible_host: ${vm_public_ip}
+          ansible_user: ${vm_username}
+          ansible_ssh_private_key_file: ${ssh_private_key}
+          ansible_python_interpreter: "${python_interpreter}"
+          acr_name: ${acr_name}
+          acr_username: ${acr_username}
+          acr_password: ${acr_password}
 
     azure_acr:
       hosts:
-        acrweucp2dev:
-          acr_login_server: acrweucp2dev.azurecr.io
+        ${acr_name}:
+          acr_login_server: ${acr_login_server}
 
     azure_aks:
       hosts:
-        aks-weu-cp2:
-          aks_resource_group: rg-weu-cp2
+        ${aks_name}:
+          aks_resource_group: ${aks_resource_group}
           ansible_connection: local
           ansible_python_interpreter: "{{ lookup('env', 'VIRTUAL_ENV') + '/bin/python' }}"
 

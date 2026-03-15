@@ -1,4 +1,10 @@
 ---
+- name: Refresh apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  become: yes
+
 - name: Install Apache Utils for htpasswd
   apt:
     name: apache2-utils

@@ -28,7 +28,7 @@ Sin embargo, impone las siguientes condiciones:
 ```plaintext
 MIT License
 
-Copyright (c) 2025 Carlos Grande
+Copyright (c) 2026 Walter Reyes
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

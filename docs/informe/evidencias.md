@@ -133,7 +133,7 @@ Terraform will perform the following actions:
       + id                            = (known after apply)
       + location                      = "westeurope"
       + login_server                  = (known after apply)
-      + name                          = "acrweucp2dev"
+      + name                          = "acrcndcp2dev"
       + network_rule_bypass_option    = "AzureServices"
       + network_rule_set              = (known after apply)
       + public_network_access_enabled = true
@@ -271,18 +271,20 @@ Desde el portal de Azure podemos observar como el servicio de contenedores (ACR)
 ![acr](../assets/images/screenshot-acr.png)
 
 ```sh
-az acr list --query "[?name=='acrweucp2dev']" --output table
+az acr list --query "[?name=='acrcndcp2dev']" --output table
 ```
 
 Tras lanzar este comando recibimos esta salida por consola:
 
 Here is the Markdown code for the table:
 
-| Name          | Location    | LoginServer              | CreationDate                      | ProvisioningState | AdminUserEnabled | DataEndpointEnabled | PublicNetworkAccess | NetworkRuleBypassOptions | ZoneRedundancy | AnonymousPullEnabled | MetadataSearch | ResourceGroup     |
-|--------------|------------|--------------------------|----------------------------------|-------------------|------------------|---------------------|---------------------|--------------------------|----------------|----------------------|----------------|------------------|
-| acrweucp2dev | westeurope | acrweucp2dev.azurecr.io | 2025-03-16T20:22:34.983350+00:00 | Succeeded         | True             | False               | Enabled             | AzureServices            | Disabled       | False                | Disabled       | rg-weu-cp2-dev   |
+| Name           | Location    | LoginServer               | CreationDate                      | ProvisioningState | AdminUserEnabled | DataEndpointEnabled | PublicNetworkAccess | NetworkRuleBypassOptions | ZoneRedundancy | AnonymousPullEnabled | MetadataSearch | ResourceGroup     |
+|---------------|------------|---------------------------|----------------------------------|-------------------|------------------|---------------------|---------------------|--------------------------|----------------|----------------------|----------------|------------------|
+| acrcndcp2dev  | westeurope | acrcndcp2dev.azurecr.io   | 2026-03-15T21:00:00.000000+00:00 | Succeeded         | True             | False               | Enabled             | AzureServices            | Disabled       | False                | Disabled       | rg-weu-cp2-dev   |
 
-También podemos comprobar que se ha creado correctamente iniciando sesión en el ACR mediante el comando `az acr login --name acrweucp2dev` que devuelve la siguiente salida:
+> ✅ El registro está accesible desde Internet y requiere autenticación (admin user). Las imágenes del proyecto se etiquetan con `casopractico2` y se almacenan en este ACR.
+
+También podemos comprobar que se ha creado correctamente iniciando sesión en el ACR mediante el comando `az acr login --name acrcndcp2dev` que devuelve la siguiente salida:
 
 ![acr-login](../assets/images/screenshot-acr-login.png)
 
@@ -306,7 +308,7 @@ terraform output
 Si hacemos ssh contra esa IP y con la clave pública que pasamos en el momento de cración podremos acceder a la VM.
 
 ```sh
-ssh -i ~/.ssh/az_unir_rsa darioreyesr25@13.81.82.89
+ssh -i ~/.ssh/az_unir_rsa darioreyesr25@20.151.118.193
 ```
 
 ![screenshot-ssh](../assets/images/screenshot-ssh.png)
@@ -355,6 +357,49 @@ kubectl get pods -n kube-system
 
 ## Publicación de las imagenes
 
+### Estructura de imágenes en el repositorio
+
+Este repositorio contiene **dos imágenes de contenedor** usadas en el despliegue:
+
+- **docs-nginx** (servicio web en la VM): definida en `Dockerfile.docs` y construida con el contenido estático que vive en la carpeta `site/`.
+- **stackedit** (aplicación web en AKS): la imagen base se toma de Docker Hub (`benweet/stackedit-base`) y se publica en el ACR desde el workflow de GitHub Actions (`.github/workflows/publish-image-stackedit.yml`).
+
+Cada imagen se etiqueta con la versión **`casopractico2`** y se almacena en el registry ACR desplegado (`acrcndcp2dev.azurecr.io`).
+
+#### Detalle de construcción y publicación
+
+- La imagen **docs-nginx** se construye en la VM mediante el Dockerfile `Dockerfile.docs`.
+  - El contenido web está en `site/`.
+  - El certificado X.509 y la configuración SSL/htpasswd se configuran dentro de la imagen.
+
+  ```dockerfile
+  # Dockerfile.docs (resumen)
+  FROM nginx:latest
+  RUN mkdir -p /etc/nginx/ssl
+  # Certificado autofirmado
+  RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+      -keyout /etc/nginx/ssl/server.key \
+      -out /etc/nginx/ssl/server.crt \
+      -subj "/C=US/ST=State/L=City/O=Company/CN=localhost"
+  COPY nginx_ssl.conf /etc/nginx/conf.d/default.conf
+  COPY site/ /usr/share/nginx/html/
+  EXPOSE 443
+  CMD ["nginx", "-g", "daemon off;"]
+  ```
+
+- La imagen **stackedit** se publica mediante GitHub Actions desde el workflow `./.github/workflows/publish-image-stackedit.yml`.
+  - Descarga la imagen base `benweet/stackedit-base:latest` y la taggea como `casopractico2`.
+  - Finalmente la push al ACR (`acrcndcp2dev.azurecr.io`).
+
+  ```yaml
+  # Extracto relevante de .github/workflows/publish-image-stackedit.yml
+  - name: Pull StackEdit Image from Docker Hub
+    run: |
+      podman pull docker.io/benweet/stackedit-base:latest
+      podman tag docker.io/benweet/stackedit-base:latest ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
+      podman push ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
+  ```
+
 ### Publicación de imágenes mediante Ansible
 
 Tras ejecutar el playbook `publish_images.yml` de Asnible con el comando:
@@ -379,7 +424,7 @@ La publicación de la imagen se automatiza mediante el workflow [`Publish mkdocs
         Siempre puedes ejecutar este comando para recuperar el usuario y la contraseña del ACR.
 
         ```bash
-        az acr credential show --name acrweucp2dev --query "[username, passwords[0].value]" -o tsv
+        az acr credential show --name acrcndcp2dev --query "[username, passwords[0].value]" -o tsv
         ```
 
     ![Workflow form](../assets/images/run-workflow-form.png)
@@ -395,7 +440,7 @@ Tras publicar las imágenes por Ansible o por Github Action podremos ver los rep
 También podemos ejectuar el siguiente comando desde local para listar las imágenes del ACR.
 
 ```sh
-az acr repository list --name acrweucp2dev --output table
+az acr repository list --name acrcndcp2dev --output table
 ```
 
 ![screenshot-acr-list](../assets/images/screenshot-acr-list.png)
@@ -419,7 +464,7 @@ ansible-playbook ansible/playbook.yml -i ansible/hosts.yml --extra-vars "@ansibl
 Si todo ha ido bien se puede comprobar que el sitio se muestra a través de internet en la ip pública de la VM. Ejecutando el comando:
 
 ```sh
-curl -k -u darioreyesr25:*** https://${VM_IP}:443
+curl -k -u darioreyesr25:*** https://20.151.118.193:443
 ```
 
 También puede visualizarse en el browser en la dirección `https://ip-publica/`.
