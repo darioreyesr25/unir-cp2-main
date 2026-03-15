@@ -72,7 +72,12 @@ plugins:
   - drawio
   - with-pdf:
       cover_subtitle: "Despliegue y configuración de infraestructura en Azure"
-  - macros
+  - macros:
+      global_context:
+        env:
+          ACR_NAME: "acrcndcp2dev"
+          IMAGE_NAME: "docs-nginx"
+          RELEASE_TAG: "casopractico2"
 
 # css
 extra_css:
