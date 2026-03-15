@@ -50,4 +50,4 @@ jobs: # Jobs to run
         - name: Deploy documentation # Name of the step
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          run: python -m mkdocs gh-deploy --force --clean --verbose --remote origin --branch gh-pages --message "Deploy docs from GitHub Actions"
+          run: python -m mkdocs gh-deploy --force --clean --verbose --remote-name origin --remote-branch gh-pages --message "Deploy docs from GitHub Actions"
