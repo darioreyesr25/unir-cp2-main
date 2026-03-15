@@ -391,6 +391,7 @@ Cada imagen se etiqueta con la versión **`casopractico2`** y se almacena en el 
   - Descarga la imagen base `benweet/stackedit-base:latest` y la taggea como `casopractico2`.
   - Finalmente la push al ACR (`acrcndcp2dev.azurecr.io`).
 
+  {% raw %}
   ```yaml
   # Extracto relevante de .github/workflows/publish-image-stackedit.yml
   - name: Pull StackEdit Image from Docker Hub
@@ -399,6 +400,7 @@ Cada imagen se etiqueta con la versión **`casopractico2`** y se almacena en el 
       podman tag docker.io/benweet/stackedit-base:latest ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
       podman push ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
   ```
+  {% endraw %}
 
 ### Publicación de imágenes mediante Ansible
 

@@ -50,4 +50,7 @@ jobs: # Jobs to run
         - name: Deploy documentation # Name of the step
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            ACR_NAME: acrcndcp2dev
+            IMAGE_NAME: docs-nginx
+            RELEASE_TAG: casopractico2
           run: python -m mkdocs gh-deploy --force --clean --verbose --remote-name origin --remote-branch main --message "Deploy docs from GitHub Actions"
