@@ -1,0 +1,82 @@
+---
+- name: Ensure ~/.ssh directory exists
+  file:
+    path: /home/darioreyesr25/.ssh
+    state: directory
+    owner: darioreyesr25
+    group: darioreyesr25
+    mode: '0700'
+  become: yes
+
+- name: Copy SSH private key to VM for GitHub access
+  copy:
+    src: "{{ lookup('env','HOME') }}/.ssh/id_rsa"
+    dest: /home/darioreyesr25/.ssh/id_rsa
+    owner: darioreyesr25
+    group: darioreyesr25
+    mode: '0600'
+  become: yes
+
+- name: Ensure /opt/unir-cp2 directory exists and is writable by the deploy user
+  file:
+    path: /opt/unir-cp2
+    state: directory
+    owner: darioreyesr25
+    group: darioreyesr25
+    mode: '0755'
+  become: yes
+
+- name: Ensure /opt/unir-cp2 contents are owned by deploy user
+  file:
+    path: /opt/unir-cp2
+    state: directory
+    owner: darioreyesr25
+    group: darioreyesr25
+    recurse: yes
+  become: yes
+
+- name: Ensure repository is present on the VM (copy from controller)
+  become: false
+  synchronize:
+    src: "{{ playbook_dir }}/.."
+    dest: "/opt/unir-cp2"
+    delete: yes
+    rsync_path: "rsync"
+    rsync_opts:
+      - "--exclude=.git"
+      - "--exclude=.vscode"
+      - "--exclude=*.pyc"
+      - "--exclude=__pycache__"
+  delegate_to: localhost
+
+- name: Install dependencies for MkDocs
+  apt:
+    name:
+      - python3-pip
+    state: present
+    update_cache: no
+  become: yes
+
+- name: Install required system dependencies for WeasyPrint
+  apt:
+    name:
+      - libpango1.0-0
+      - libpangocairo-1.0-0
+      - libcairo2
+    state: present
+    update_cache: no
+  become: yes
+
+- name: Install project dependencies
+  pip:
+    requirements: "/opt/unir-cp2/requirements.txt"
+
+- name: Build MkDocs static site
+  command:
+    cmd: mkdocs build
+    chdir: "/opt/unir-cp2"
+
+- name: Build Podman image on the VM
+  command:
+    cmd: podman build -t "{{ image_name_docs }}:{{ image_tag_docs }}" -f /opt/unir-cp2/Dockerfile.docs
+    chdir: "/opt/unir-cp2"

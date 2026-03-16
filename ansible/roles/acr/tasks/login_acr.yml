@@ -1,0 +1,35 @@
+---
+- name: Debug ACR login variables (for troubleshooting)
+  debug:
+    msg:
+      - "acr_name={{ acr_name | default('<<unset>>') }}"
+      - "acr_login_server={{ acr_login_server | default('<<unset>>') }}"
+
+- name: Fail if ACR login info is missing
+  fail:
+    msg: |
+      ACR login server could not be determined.
+      Define either:
+        - acr_login_server (e.g. acrcndcp2dev.azurecr.io)
+        - OR acr_name (e.g. acrcndcp2dev)
+
+      Current values:
+      acr_login_server={{ acr_login_server | default('<<unset>>') }}
+      acr_name={{ acr_name | default('<<unset>>') }}
+  when: (acr_login_server | default('') == '') and (acr_name | default('') == '')
+
+- name: Compute ACR login server hostname for podman
+  set_fact:
+    acr_login_server_resolved: >-
+      {{
+        (acr_login_server | default('') | trim)
+        if (acr_login_server | default('') | trim) not in ['', '.azurecr.io']
+        else (acr_name | default('') ~ '.azurecr.io')
+      }}
+
+- name: Log in to ACR from the VM
+  command: >
+    podman login {{ acr_login_server_resolved }} 
+    -u {{ acr_username }} 
+    --password {{ acr_password }}
+  timeout: 20  # Timeout in seconds
