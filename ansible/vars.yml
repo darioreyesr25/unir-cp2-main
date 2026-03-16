@@ -1,0 +1,8 @@
+---
+# Existing docs-nginx image
+image_name_docs: "docs-nginx"
+image_tag_docs: "casopractico2"
+
+# New StackEdit image
+image_name_stackedit: "stackedit"
+image_tag_stackedit: "casopractico2"
