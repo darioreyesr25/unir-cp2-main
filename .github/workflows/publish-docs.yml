@@ -58,4 +58,4 @@ jobs: # Jobs to run
           run: |
             # Ensure mkdocs can push to the repo via the checked-out token
             git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-            python -m mkdocs gh-deploy --force --clean --verbose --remote-name origin --remote-branch main --message "Deploy docs from GitHub Actions"
+            python -m mkdocs gh-deploy --force --clean --verbose --remote-name origin --remote-branch gh-pages --message "Deploy docs from GitHub Actions"
