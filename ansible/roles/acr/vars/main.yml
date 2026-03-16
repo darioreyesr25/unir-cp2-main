@@ -1,2 +1,0 @@
----
-acr_login_server: "{{ lookup('env', 'ACR_NAME') }}.azurecr.io"  # Servidor de inicio de sesión del ACR
