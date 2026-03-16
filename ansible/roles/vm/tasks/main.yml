@@ -1,0 +1,11 @@
+- name: Include authentication setup
+  import_tasks: auth.yml
+
+- name: Install container runtime
+  import_tasks: install.yml
+
+- name: Include container deployment
+  import_tasks: container.yml
+
+- name: Include systemd configuration
+  import_tasks: systemd.yml
