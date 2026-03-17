@@ -11,7 +11,7 @@ echo "🔍 Fetching Azure resources..."
 
 # Determine ACR name (override via env var if provided)
 if [ -z "${ACR_NAME:-}" ]; then
-  ACR_NAME=$(az acr list --resource-group "$RESOURCE_GROUP" --query "[0].name" -o tsv)
+  ACR_NAME=$(az acr list --resource-group "$RESOURCE_GROUP" --query "[0].name" -o tsv | tr -d '\r')
 fi
 
 # If autodetect fails, force a known name (adjust as needed)
@@ -27,17 +27,17 @@ if [[ ! "${ACR_NAME}" =~ ^[a-z0-9]{5,50}$ ]]; then
 fi
 
 # Automatically get the VM name from the resource group
-VM_NAME=$(az vm list --resource-group "$RESOURCE_GROUP" --query "[0].name" -o tsv)
+VM_NAME=$(az vm list --resource-group "$RESOURCE_GROUP" --query "[0].name" -o tsv | tr -d '\r')
 
 # Get ACR credentials
-ACR_USERNAME=$(az acr credential show --name "$ACR_NAME" --query username -o tsv)
-ACR_PASSWORD=$(az acr credential show --name "$ACR_NAME" --query passwords[0].value -o tsv)
+ACR_USERNAME=$(az acr credential show --name "$ACR_NAME" --query username -o tsv | tr -d '\r')
+ACR_PASSWORD=$(az acr credential show --name "$ACR_NAME" --query passwords[0].value -o tsv | tr -d '\r')
 
 # Get the ACR login server
-ACR_LOGIN_SERVER=$(az acr show --name "$ACR_NAME" --query loginServer -o tsv)
+ACR_LOGIN_SERVER=$(az acr show --name "$ACR_NAME" --query loginServer -o tsv | tr -d '\r')
 
 # Get the public IP of the VM
-VM_IP=$(az vm show -d -g "$RESOURCE_GROUP" -n "$VM_NAME" --query publicIps -o tsv)
+VM_IP=$(az vm show -d -g "$RESOURCE_GROUP" -n "$VM_NAME" --query publicIps -o tsv | tr -d '\r')
 
 # Export variables to the current session
 echo "🔐 Saving credentials..."

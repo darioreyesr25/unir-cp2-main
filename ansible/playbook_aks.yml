@@ -1,6 +1,6 @@
 ---
 - name: Deploy Application on AKS
-  hosts: localhost
+  hosts: azure_aks
   gather_facts: no
   roles:
     - aks

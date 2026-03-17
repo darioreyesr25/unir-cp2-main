@@ -1,32 +1,59 @@
 ---
+# Backend (vote storage) deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: stackedit
+  name: {{ back_deployment_name }}
+  namespace: {{ k8s_namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: stackedit
+      app: {{ back_deployment_name }}
   template:
     metadata:
       labels:
-        app: stackedit
+        app: {{ back_deployment_name }}
     spec:
       containers:
-      - name: stackedit
-        image: "{{ acr_name }}.azurecr.io/{{ image_name_stackedit }}:{{ image_tag_stackedit }}"
+      - name: {{ back_deployment_name }}
+        image: "{{ acr_name }}.azurecr.io/{{ image_name_k8s_back }}:{{ image_tag_k8s_back }}"
         ports:
-        - containerPort: 8080
+        - containerPort: 6379
         volumeMounts:
-        - name: storage
+        - name: data
           mountPath: "/data"
-        env:
-        - name: ENV_VAR
-          value: "example-value"
       volumes:
-      - name: storage
+      - name: data
         persistentVolumeClaim:
           claimName: {{ pvc_name }}
+      imagePullSecrets:
+      - name: acr-secret
+
+---
+# Frontend deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ front_deployment_name }}
+  namespace: {{ k8s_namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ front_deployment_name }}
+  template:
+    metadata:
+      labels:
+        app: {{ front_deployment_name }}
+    spec:
+      containers:
+      - name: {{ front_deployment_name }}
+        image: "{{ acr_name }}.azurecr.io/{{ image_name_k8s_front }}:{{ image_tag_k8s_front }}"
+        ports:
+        - containerPort: 80
+        env:
+        - name: REDIS
+          value: "{{ back_service_name }}"
       imagePullSecrets:
       - name: acr-secret

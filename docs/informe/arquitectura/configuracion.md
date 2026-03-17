@@ -70,7 +70,7 @@ ansible/
 │   │   │   ├── build_docs.yml      # Construcción de las imágenes
 │   │   │   ├── login.yml           # Iniciar sesión en ACR
 │   │   │   ├── push_mkdocs.yml     # Publicación de mkdocs en ACR
-│   │   │   └── push_stackedit.yml  # Publicación de stackedit en ACR
+│   │   │   └── push_aks_images.yml  # Publicación de imágenes de la aplicación en ACR
 │   │   └── vars/                   # Variables específicas del rol
 │   │       └── main.yml            # Configuración de parámetros
 ```
@@ -91,8 +91,8 @@ El fichero `tasks/main.yml` dentro del rol acr, gestiona la configuración y pub
 - name: Push mkdocs image to ACR from the VM
   include_tasks: push_mkdocs.yml
 
-- name: Push stackedit image to ACR from localhost
-  include_tasks: push_stackedit.yml
+- name: Push AKS application images to ACR from localhost
+  include_tasks: push_aks_images.yml
 ```
 
 #### Instalar Podman

@@ -1,7 +1,8 @@
 ---
-- name: Create Kubernetes Namespace
-  kubernetes.core.k8s:
-    name: "{{ namespace }}"
-    api_version: v1
-    kind: Namespace
-    state: present
+- name: Render Namespace manifest
+  template:
+    src: namespace.yml.j2
+    dest: "/tmp/aks-namespace-{{ k8s_namespace }}.yaml"
+
+- name: Apply Namespace manifest
+  command: kubectl apply -f /tmp/aks-namespace-{{ k8s_namespace }}.yaml

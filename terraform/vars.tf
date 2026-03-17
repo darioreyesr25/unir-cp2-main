@@ -41,9 +41,9 @@ variable "vm_size" {
 }
 
 variable "ssh_public_key" {
-  description = "Path to the local ssh public key"
+  description = "SSH public key contents (preferred) or a local file path to the public key (if the file is within the repo)."
   type        = string
-  default     = "C:\\Users\\dario\\.ssh\\id_rsa.pub"
+  default     = ""
 }
 
 # Networking
@@ -103,6 +103,11 @@ variable "node_count" {
   description = "Number of nodes in AKS cluster"
   type        = number
   default     = 1
+
+  validation {
+    condition     = var.node_count == 1
+    error_message = "AKS must be deployed with exactly one worker node for this exercise."
+  }
 }
 
 variable "aks_vm_size" {

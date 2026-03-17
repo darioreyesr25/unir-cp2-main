@@ -27,7 +27,10 @@ module "virtual_machine" {
   vm_name            = "${var.vm_name}-${var.environment}"
   vm_size            = var.vm_size
   admin_username     = var.vm_username
-  ssh_public_key     = file("${var.ssh_public_key}")
+  # Allow either passing the public key material directly or a relative path to a key file.
+  # Terraform's file() requires files to be part of the configuration tree, so pointing
+  # at a user home path (e.g. C:\Users\...\.ssh\id_rsa.pub) would fail.
+  ssh_public_key     = fileexists(var.ssh_public_key) ? file(var.ssh_public_key) : var.ssh_public_key
   vnet_name          = "${var.vnet_name}-${var.environment}"
   subnet_name        = "${var.subnet_name}-${var.environment}"
   subnet_cidr        = var.subnet_cidr
@@ -65,7 +68,7 @@ resource "local_file" "ansible_inventory" {
     vm_name             = var.vm_name
     vm_public_ip        = module.virtual_machine.vm_public_ip
     vm_username         = var.vm_username
-    ssh_private_key     = "/home/linux/.ssh/id_rsa"
+    ssh_private_key     = "~/.ssh/id_rsa"
     python_interpreter  = var.python_interpreter
     acr_name            = "${var.acr_name}${var.environment}"
     acr_login_server    = "${var.acr_name}${var.environment}.azurecr.io"

@@ -1,5 +1,18 @@
 ---
-namespace: "cp2"
-pvc_name: "stackedit-pvc"
-service_name: "stackedit-service"
-service_port: 80
+# Kubernetes namespace for AKS resources
+k8s_namespace: "cp2"
+
+# Persistent storage for Redis
+pvc_name: "redis-data-pvc"
+
+# Deployment names
+front_deployment_name: "azure-vote-front"
+back_deployment_name: "redis"
+
+# Service names
+front_service_name: "azure-vote-front"
+back_service_name: "redis"
+
+# Ports
+front_service_port: 80
+backend_service_port: 6379

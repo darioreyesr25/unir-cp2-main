@@ -20,6 +20,9 @@ all:
       hosts:
         ${aks_name}:
           aks_resource_group: ${aks_resource_group}
+          acr_name: ${acr_name}
+          acr_username: ${acr_username}
+          acr_password: ${acr_password}
           ansible_connection: local
           ansible_python_interpreter: "{{ lookup('env', 'VIRTUAL_ENV') + '/bin/python' }}"
 

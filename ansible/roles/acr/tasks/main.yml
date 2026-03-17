@@ -11,5 +11,5 @@
 - name: Push mkdocs image to ACR from the VM
   include_tasks: push_mkdocs.yml
 
-- name: Push stackedit image to ACR from localhost
-  include_tasks: push_stackedit.yml
+- name: Push AKS application images to ACR from localhost
+  include_tasks: push_aks_images.yml

@@ -262,7 +262,7 @@ terraform -chdir=./terraform apply --auto-approve
 
 El `rg-weu-cp2-dev` contiene todos los recursos declarados en nuestros ficheros de terraform.
 
-![rg-weu-cp2-dev](../assets/images/screenshot-rg-weu-cp2-dev.png)
+![rg-weu-cp2-dev](../assets/images/screenshot-rg-cnd-cp2-dev.png)
 
 ### Creación del ACR
 

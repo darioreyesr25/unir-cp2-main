@@ -33,6 +33,18 @@ El despliegue de la infraestructura se realiza con Terraform desde la máquina l
     terraform -chdir=./terraform apply --auto-approve
     ```
 
+> Nota: Terraform necesita la clave pública SSH para provisionar la VM. Puedes pasarla directamente como texto o bien como ruta relativa a un fichero dentro del repositorio. Ejemplos:
+>
+> ```sh
+> terraform -chdir=./terraform apply --auto-approve \
+>   -var "ssh_public_key=$(cat ~/.ssh/id_rsa.pub)"
+> ```
+>
+> ```sh
+> terraform -chdir=./terraform apply --auto-approve \
+>   -var "ssh_public_key=./terraform/id_rsa.pub"
+> ```
+>
 !!! tip "Automatización de variables"
 
     Tras el despliegue de toda la infraestructura se generan automáticamente las variables globales necesarias para poder realizar lo que queda del ejercicio ejecutando el fichero `setup.sh`.
@@ -45,11 +57,20 @@ El despliegue de la infraestructura se realiza con Terraform desde la máquina l
 
 ### Publicación de las imágenes mediante Ansible
 
-Para publicar imágenes en el ACR utilizando Ansible, se ha creado un playbook llamado `publish-images.yaml`. Para llevar a cabo su ejecución, es necesario es necesario ejecutar desde el directorio de ansible el siguiente comando.
+Para publicar imágenes en el ACR utilizando Ansible, se ha creado un playbook llamado `publish-images.yml`. En este entorno, Ansible no está disponible en PowerShell, por lo que debe ejecutarse desde **WSL/Ubuntu** (o cualquier Linux donde Ansible esté instalado).
 
-```sh
-ansible-playbook publish_images.yml -i hosts.yml --ask-vault-pass
-```
+1. Asegúrate de tener Ansible instalado en WSL:
+
+    ```sh
+    sudo apt update && sudo apt install -y ansible
+    ```
+
+2. Ejecuta el playbook desde el directorio del proyecto:
+
+    ```sh
+    cd /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main
+    ansible-playbook ansible/publish_images.yml -i ansible/hosts.yml --ask-vault-pass
+    ```
 
 Este comando construye la imagen de MkDocs, descarga la imagen pública de StackEdit y publica ambas imágenes en el ACR desde la VM.
 
@@ -79,16 +100,17 @@ La publicación de la imagen se automatiza mediante el workflow [`Publish mkdocs
 
 La configuración de la VM se llevará a cabo desde la máquina local utilizando Ansible, accediendo por SSH para realizar comprobaciones y garantizar el correcto despliegue del entorno.
 
-1. Comprobar conexión a la VM por SSH
+1. Comprobar conexión a la VM por SSH (desde WSL/Ubuntu)
 
     ```sh
-    ssh -i ~/.ssh/az_unir_rsa darioreyesr25@${VM_IP}
+    ssh -i ~/.ssh/id_rsa darioreyesr25@${VM_IP}
     exit
     ```
 
 2. Ejecutar ansible apuntando a la VM. Asegurarse que el comando se ejecuta desde `./ansible`. Para forzar ansible a recrear todo desde el principio es posible usar los argumentos `--force-handlers` y `--extra-vars "recreate=true"`.
 
     ```sh
+    # Ejecuta este comando desde WSL/Ubuntu o desde un entorno donde Ansible esté instalado.
     ansible-playbook ansible/playbook.yml -i ansible/hosts.yml --extra-vars "@ansible/vars.yml" --ask-vault-pass
     ```
 
@@ -108,25 +130,36 @@ La configuración de la VM se llevará a cabo desde la máquina local utilizando
 
 El despliegue de la aplicación en el clúster de Kubernetes se realiza mediante Ansible, aplicando los manifiestos necesarios para crear el namespace, el deployment, el PersistentVolumeClaim, el Service y el secret de acceso al ACR. Todo el proceso queda automatizado en el playbook `playbook_aks.yml`.
 
-1. Descargar credenciales del AKS para interactuar con el clúster desde kubectl.
-
-    El siguiente comando guarda las credenciales del AKS en `/home/<USER>/.kube/config` y marca como contexto el AKS seleccionado.
+> ⚠️ **Importante:** Este flujo está pensado para ejecutarse desde **WSL/Ubuntu** (o cualquier Linux con Ansible instalado). En Windows no está disponible `ansible-playbook` ni `kubectl` por defecto.
+>
+> En algunos entornos de WSL (p. ej. Docker Desktop) el disco puede montarse en **modo sólo lectura**, lo que impide instalar paquetes y ejecutar `ansible-playbook`. Si ves errores como “mounted read-only as a fallback”, reinicia/recupera WSL siguiendo:
+>
+> https://aka.ms/wsldiskmountrecovery
+>
+> Luego asegúrate de que WSL esté en modo lectura/escritura y ejecuta:
+>
+> ```sh
+> sudo apt update
+> sudo apt install -y ansible kubectl
+> ```
+>
+> (Opcional) Si deseas usar la CLI de Azure desde WSL:
+>
+> ```sh
+> curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+> ```
+>
+> Antes de ejecutar `az aks get-credentials`, asegúrate de haber iniciado sesión en Azure:
+>
+> ```sh
+> az login
+> az aks get-credentials --resource-group rg-cnd-cp2-dev --name aks-cnd-cp2-dev
+> ```
+>
+> > Nota: Este comando requiere que `kubectl` esté instalado en el entorno donde ejecutes el playbook (por ejemplo, WSL). El rol `aks` intentará instalarlo automáticamente si no existe.
 
     ```sh
-    az aks get-credentials --resource-group rg-weu-cp2-dev --name aks-weu-cp2-dev
-    ```
-
-
-2. Ejecutar el playbook de Ansible para desplegar la aplicación en AKS. Este comando debe lanzarse desde la raíz del proyecto.
-
-    ```
-    ansible-playbook playbook_aks.yml -i hosts.yml --ask-vault-pass
-    ```
-
-3. Para obtener la IP pública del servicio y acceder a la aplicación desplegada, ejecuta el siguiente comando.
-
-    ```sh
-    kubectl get svc stackedit-service -n cp2 -o jsonpath="{.status.loadBalancer.ingress[0].ip}"
+    kubectl get svc azure-vote-front -n cp2 -o jsonpath="{.status.loadBalancer.ingress[0].ip}"
     ```
 
     La aplicación estará disponible en esa dirección IP a través del puerto 80.
