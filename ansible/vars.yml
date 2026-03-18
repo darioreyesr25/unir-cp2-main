@@ -1,0 +1,12 @@
+---
+# Existing docs-nginx image
+image_name_docs: "docs-nginx"
+image_tag_docs: "casopractico2"
+
+# Kubernetes application images (stored in ACR)
+image_name_k8s_front: "azure-vote-front"
+image_tag_k8s_front: "v1"
+
+# Redis backend image (stored in ACR)
+image_name_k8s_back: "redis"
+image_tag_k8s_back: "7.0"
