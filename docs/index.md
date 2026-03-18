@@ -8,7 +8,7 @@
 
 El informe en PDF ha sido generado a partir de la documentación escrita en Markdown utilizando MkDocs, una librería escrita en Python que me parece muy interesante y que uso habitualmente en mi día a día. Además, el informe completo se encuentra disponible online a través de GitHub Pages, recomiendo acceder a la versión online ya que considero que es mucho más ágil su lectura.
 
-[:octicons-browser-16: Ir a la versión online](https://darioreyesr25.github.io/unir-cp2){ .md-button }
+[:octicons-browser-16: Ir a la versión online](https://darioreyesr25.github.io/unir-cp2-main){ .md-button }
 
 ## Introducción
 

@@ -45,7 +45,7 @@ Terraform will perform the following actions:
   + resource "azurerm_kubernetes_cluster" "aks" {
       + api_server_authorized_ip_ranges     = (known after apply)
       + current_kubernetes_version          = (known after apply)
-      + dns_prefix                          = "aksweucp2"
+      + dns_prefix                          = "akscndcp2"
       + fqdn                                = (known after apply)
       + http_application_routing_zone_name  = (known after apply)
       + id                                  = (known after apply)
@@ -57,7 +57,7 @@ Terraform will perform the following actions:
       + kube_config_raw                     = (sensitive value)
       + kubernetes_version                  = (known after apply)
       + location                            = "westeurope"
-      + name                                = "aks-weu-cp2-dev"
+      + name                                = "aks-cnd-cp2-dev"
       + node_resource_group                 = (known after apply)
       + node_resource_group_id              = (known after apply)
       + oidc_issuer_url                     = (known after apply)
@@ -67,7 +67,7 @@ Terraform will perform the following actions:
       + private_dns_zone_id                 = (known after apply)
       + private_fqdn                        = (known after apply)
       + public_network_access_enabled       = true
-      + resource_group_name                 = "rg-weu-cp2-dev"
+      + resource_group_name                 = "rg-cnd-cp2-dev"
       + role_based_access_control_enabled   = true
       + run_command_enabled                 = true
       + sku_tier                            = "Standard"
@@ -137,7 +137,7 @@ Terraform will perform the following actions:
       + network_rule_bypass_option    = "AzureServices"
       + network_rule_set              = (known after apply)
       + public_network_access_enabled = true
-      + resource_group_name           = "rg-weu-cp2-dev"
+      + resource_group_name           = "rg-cnd-cp2-dev"
       + retention_policy              = (known after apply)
       + sku                           = "Basic"
       + tags                          = {
@@ -159,7 +159,7 @@ Terraform will perform the following actions:
       + id                                                     = (known after apply)
       + location                                               = "westeurope"
       + max_bid_price                                          = -1
-      + name                                                   = "vm-weu-cp2-docs-dev"
+      + name                                                   = "vm-cnd-cp2-docs-dev"
       + network_interface_ids                                  = (known after apply)
       + patch_assessment_mode                                  = "ImageDefault"
       + patch_mode                                             = "ImageDefault"
@@ -170,7 +170,7 @@ Terraform will perform the following actions:
       + provision_vm_agent                                     = true
       + public_ip_address                                      = (known after apply)
       + public_ip_addresses                                    = (known after apply)
-      + resource_group_name                                    = "rg-weu-cp2-dev"
+      + resource_group_name                                    = "rg-cnd-cp2-dev"
       + size                                                   = "Standard_B1ls"
       + tags                                                   = {
           + "environment" = "casopractico2"
@@ -215,10 +215,10 @@ Terraform will perform the following actions:
       + ip_forwarding_enabled          = (known after apply)
       + location                       = "westeurope"
       + mac_address                    = (known after apply)
-      + name                           = "vm-weu-cp2-docs-dev-nic"
+      + name                           = "vm-cnd-cp2-docs-dev-nic"
       + private_ip_address             = (known after apply)
       + private_ip_addresses           = (known after apply)
-      + resource_group_name            = "rg-weu-cp2-dev"
+      + resource_group_name            = "rg-cnd-cp2-dev"
       + tags                           = {
           + "environment" = "casopractico2"
         }
@@ -231,8 +231,8 @@ Terraform will perform the following actions:
           + private_ip_address                                 = (known after apply)
           + private_ip_address_allocation                      = "Dynamic"
           + private_ip_address_version                         = "IPv4"
-          + public_ip_address_id                               = "/subscriptions/fb24fc1f-67e2-4871-8be2-c10a36e74c93/resourceGroups/rg-weu-cp2-dev/providers/Microsoft.Network/publicIPAddresses/vm-weu-cp2-docs-dev-public-ip"
-          + subnet_id                                          = "/subscriptions/fb24fc1f-67e2-4871-8be2-c10a36e74c93/resourceGroups/rg-weu-cp2-dev/providers/Microsoft.Network/virtualNetworks/vnet-weu-cp2-dev/subnets/subnet-weu-cp2-dev"
+          + public_ip_address_id                               = "/subscriptions/fb24fc1f-67e2-4871-8be2-c10a36e74c93/resourceGroups/rg-cnd-cp2-dev/providers/Microsoft.Network/publicIPAddresses/vm-cnd-cp2-docs-dev-public-ip"
+          + subnet_id                                          = "/subscriptions/fb24fc1f-67e2-4871-8be2-c10a36e74c93/resourceGroups/rg-cnd-cp2-dev/providers/Microsoft.Network/virtualNetworks/vnet-cnd-cp2-dev/subnets/subnet-cnd-cp2-dev"
         }
     }
 
@@ -254,15 +254,15 @@ terraform -chdir=./terraform apply --auto-approve
 
 ![resource-groups](../assets/images/screenshot-resource-groups.png)
 
-- **MC_rg-weu-cp2-dev_aks-weu-cp2-dev_westeurope**: Grupo de recursos gestionado automáticamente por Azure para almacenar los nodos y configuraciones internas del AKS.  
+- **MC_rg-cnd-cp2-dev_aks-cnd-cp2-dev_canadacentral**: Grupo de recursos gestionado automáticamente por Azure para almacenar los nodos y configuraciones internas del AKS.  
 - **NetworkWatcherRG**: Grupo de recursos creado por Azure para herramientas de monitoreo y diagnóstico de red.  
-- **rg-weu-cp2-dev**: Grupo de recursos principal donde se despliegan la VM, el ACR y el AKS mediante Terraform.
+- **rg-cnd-cp2-dev**: Grupo de recursos principal donde se despliegan la VM, el ACR y el AKS mediante Terraform.
 
-#### rg-weu-cp2-dev
+#### rg-cnd-cp2-dev
 
-El `rg-weu-cp2-dev` contiene todos los recursos declarados en nuestros ficheros de terraform.
+El `rg-cnd-cp2-dev` contiene todos los recursos declarados en nuestros ficheros de terraform.
 
-![rg-weu-cp2-dev](../assets/images/screenshot-rg-cnd-cp2-dev.png)
+![rg-cnd-cp2-dev](../assets/images/screenshot-rg-cnd-cp2-dev.png)
 
 ### Creación del ACR
 
@@ -271,7 +271,7 @@ Desde el portal de Azure podemos observar como el servicio de contenedores (ACR)
 ![acr](../assets/images/screenshot-acr.png)
 
 ```sh
-az acr list --query "[?name=='acrcndcp2dev']" --output table
+az acr list --query "[?name=='{{ terraform_output("acr_name") }}']" --output table
 ```
 
 Tras lanzar este comando recibimos esta salida por consola:
@@ -280,11 +280,11 @@ Here is the Markdown code for the table:
 
 | Name           | Location    | LoginServer               | CreationDate                      | ProvisioningState | AdminUserEnabled | DataEndpointEnabled | PublicNetworkAccess | NetworkRuleBypassOptions | ZoneRedundancy | AnonymousPullEnabled | MetadataSearch | ResourceGroup     |
 |---------------|------------|---------------------------|----------------------------------|-------------------|------------------|---------------------|---------------------|--------------------------|----------------|----------------------|----------------|------------------|
-| acrcndcp2dev  | westeurope | acrcndcp2dev.azurecr.io   | 2026-03-15T21:00:00.000000+00:00 | Succeeded         | True             | False               | Enabled             | AzureServices            | Disabled       | False                | Disabled       | rg-weu-cp2-dev   |
+| acrcndcp2dev  | westeurope | acrcndcp2dev.azurecr.io   | 2026-03-15T21:00:00.000000+00:00 | Succeeded         | True             | False               | Enabled             | AzureServices            | Disabled       | False                | Disabled       | rg-cnd-cp2-dev   |
 
-> ✅ El registro está accesible desde Internet y requiere autenticación (admin user). Las imágenes del proyecto se etiquetan con `casopractico2` y se almacenan en este ACR.
+> El registro está accesible desde Internet y requiere autenticación (admin user). Las imágenes del proyecto se etiquetan con `casopractico2` y se almacenan en este ACR.
 
-También podemos comprobar que se ha creado correctamente iniciando sesión en el ACR mediante el comando `az acr login --name acrcndcp2dev` que devuelve la siguiente salida:
+También podemos comprobar que se ha creado correctamente iniciando sesión en el ACR mediante el comando `az acr login --name {{ terraform_output("acr_name") }}` que devuelve la siguiente salida:
 
 ![acr-login](../assets/images/screenshot-acr-login.png)
 
@@ -322,21 +322,21 @@ Desde el portal de Azure podemos observar como el servicio de Kubernetes (AKS) s
 Podemos comprobar el estado del AKS en Azure mediante el siguiente comando:
 
 ```sh
-az aks show --resource-group rg-weu-cp2-dev --name aks-weu-cp2-dev --output table
+az aks show --resource-group {{ terraform_output("resource_group_name") }} --name {{ terraform_output("aks_name") }} --output table
 ```
 
 Here is the markdown code for your table:
 
 | Name             | Location    | ResourceGroup   | KubernetesVersion | CurrentKubernetesVersion | ProvisioningState | Fqdn                                             |
 |-----------------|------------|----------------|-------------------|--------------------------|-------------------|--------------------------------------------------|
-| aks-weu-cp2-dev | westeurope | rg-weu-cp2-dev | 1.30              | 1.30.9                   | Succeeded         | aksweucp2-1fslhh1t.hcp.westeurope.azmk8s.io     |
+| aks-cnd-cp2-dev | westeurope | rg-cnd-cp2-dev | 1.30              | 1.30.9                   | Succeeded         | akscndcp2-1fslhh1t.hcp.westeurope.azmk8s.io     |
 
 Para probar desde local que podemos acceder al cluster de Kubernetes, podemos realizar los siguientes comandos.
 
 ??? note "Credenciales de acceso"
 
     ```sh
-    az aks get-credentials --resource-group rg-weu-cp2-dev --name aks-weu-cp2-dev
+    az aks get-credentials --resource-group {{ terraform_output("resource_group_name") }} --name {{ terraform_output("aks_name") }}
     ```
 
 Con este comando podemos ver los nodos del cluster y si el AKS está levantado, deberían aparecer con estado Ready.
@@ -362,9 +362,11 @@ kubectl get pods -n kube-system
 Este repositorio contiene **dos imágenes de contenedor** usadas en el despliegue:
 
 - **docs-nginx** (servicio web en la VM): definida en `Dockerfile.docs` y construida con el contenido estático que vive en la carpeta `site/`.
-- **stackedit** (aplicación web en AKS): la imagen base se toma de Docker Hub (`benweet/stackedit-base`) y se publica en el ACR desde el workflow de GitHub Actions (`.github/workflows/publish-image-stackedit.yml`).
+- **azure-vote-front** (aplicación web en AKS): la imagen base se toma de Docker Hub (`jsosa15/azure-vote-front:v1`) y se publica en el ACR desde el workflow de GitHub Actions (`.github/workflows/publish-image-stackedit.yml`).
 
-Cada imagen se etiqueta con la versión **`casopractico2`** y se almacena en el registry ACR desplegado (`acrcndcp2dev.azurecr.io`).
+- **redis** (servicio backend en AKS): la imagen base se toma de Docker Hub (`redis:7.0`) y se publica en el ACR desde el propio playbook de Ansible (`ansible/publish_images.yml`).
+
+Cada imagen se etiqueta con la versión **`casopractico2`** y se almacena en el registry ACR desplegado (`{{ terraform_output("acr_login_server") }}`).
 
 #### Detalle de construcción y publicación
 
@@ -387,20 +389,18 @@ Cada imagen se etiqueta con la versión **`casopractico2`** y se almacena en el 
   CMD ["nginx", "-g", "daemon off;"]
   ```
 
-- La imagen **stackedit** se publica mediante GitHub Actions desde el workflow `./.github/workflows/publish-image-stackedit.yml`.
-  - Descarga la imagen base `benweet/stackedit-base:latest` y la taggea como `casopractico2`.
-  - Finalmente la push al ACR (`acrcndcp2dev.azurecr.io`).
+- La imagen **azure-vote-front** se publica mediante GitHub Actions desde el workflow `./.github/workflows/publish-image-stackedit.yml`.
+  - Descarga la imagen base `jsosa15/azure-vote-front:v1` y la taggea como `casopractico2`.
+  - Finalmente la push al ACR (`{{ terraform_output("acr_login_server") }}`).
 
-  {% raw %}
   ```yaml
   # Extracto relevante de .github/workflows/publish-image-stackedit.yml
-  - name: Pull StackEdit Image from Docker Hub
+  - name: Pull Azure Vote Front Image from Docker Hub
     run: |
-      podman pull docker.io/benweet/stackedit-base:latest
-      podman tag docker.io/benweet/stackedit-base:latest ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
-      podman push ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
+      podman pull docker.io/jsosa15/azure-vote-front:v1
+      podman tag docker.io/jsosa15/azure-vote-front:v1 $&#123;&#123; env.ACR_NAME &#125;&#125;.azurecr.io/$&#123;&#123; env.IMAGE_NAME &#125;&#125;:$&#123;&#123; env.RELEASE_TAG &#125;&#125;
+      podman push $&#123;&#123; env.ACR_NAME &#125;&#125;.azurecr.io/$&#123;&#123; env.IMAGE_NAME &#125;&#125;:$&#123;&#123; env.RELEASE_TAG &#125;&#125;
   ```
-  {% endraw %}
 
 ### Publicación de imágenes mediante Ansible
 
@@ -417,21 +417,9 @@ Podemos ver como se ejecuta el rol de ACR de la carpeta Ansible ejecutando las t
 
 ### Publicación mediante Github Actions (fuera de alcance)
 
-La publicación de la imagen se automatiza mediante el workflow [`Publish mkdocs image to ACR`](https://github.com/darioreyesr25/unir-cp2/actions/workflows/publish-image-mkdocs.yml) de GitHub Actions, que envía la imagen al Azure Container Registry (ACR). Para ello, se deben proporcionar las credenciales adecuadas y validar la ejecución del proceso.
+La publicación de la imagen se automatiza mediante el workflow [`Publish mkdocs image to ACR`](https://github.com/darioreyesr25/unir-cp2-main/actions/workflows/publish-image-mkdocs.yml) de GitHub Actions, que envía la imagen al Azure Container Registry (ACR). Para ello, se deben proporcionar las credenciales adecuadas y validar la ejecución del proceso.
 
-1. Rellenar los datos del formulario del workflow con username y pwd del ACR desplegado en Azure.
-
-    ??? note "Visualizar usuario y contraseña del ACR"
-
-        Siempre puedes ejecutar este comando para recuperar el usuario y la contraseña del ACR.
-
-        ```bash
-        az acr credential show --name acrcndcp2dev --query "[username, passwords[0].value]" -o tsv
-        ```
-
-    ![Workflow form](../assets/images/run-workflow-form.png)
-
-2. Ejecutar workflow y validar la correcta ejecución del job
+1. Ejecutar workflow y validar la correcta ejecución del job
 
 ![Workflow run](../assets/images/job-logs.png)
 
@@ -442,7 +430,7 @@ Tras publicar las imágenes por Ansible o por Github Action podremos ver los rep
 También podemos ejectuar el siguiente comando desde local para listar las imágenes del ACR.
 
 ```sh
-az acr repository list --name acrcndcp2dev --output table
+az acr repository list --name {{ terraform_output("acr_name") }} --output table
 ```
 
 ![screenshot-acr-list](../assets/images/screenshot-acr-list.png)
@@ -451,9 +439,9 @@ az acr repository list --name acrcndcp2dev --output table
 
 ![screenshot-docs-nginx-image](../assets/images/screenshot-docs-nginx-image.png)
 
-#### Imagen `stackedit`
+#### Imagen `azure-vote-front`
 
-![screenshot-stackedit-image](../assets/images/screenshot-stackedit-image.png)
+![screenshot-azure-vote-front-image](../assets/images/screenshot-web-vote-front-aks.png)
 
 ## Despliegue en la VM
 
@@ -489,33 +477,60 @@ ansible-playbook playbook_aks.yml -i hosts.yml --ask-vault-pass
 Podemos comprobar que el servicio se ha creado correctamente con tipo `LoadBalancer` y que la IP pública ha sido asignada:
 
 ```sh
-kubectl get svc stackedit-service -n cp2
+kubectl get svc azure-vote-front -n cp2
 ```
 
 Resultado:
 
 ```
 NAME                TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)        AGE
-stackedit-service   LoadBalancer   10.0.237.2     74.178.201.19   80:32417/TCP   40m
+azure-vote-front    LoadBalancer   10.0.247.243   <pending>       80:30983/TCP   10s
 ```
 
-Esto indica que la aplicación desplegada está accesible públicamente a través de la IP `74.178.201.19`.
+#### ¿Dónde ver la IP pública del LoadBalancer?
+
+Este servicio está expuesto como un **LoadBalancer**, lo que hace que Azure cree automáticamente una IP pública para acceder a la aplicación.
+
+- **Con kubectl** (cuando se provisiona la IP):
+  ```sh
+  kubectl get svc azure-vote-front -n cp2
+  ```
+  Comprueba la columna `EXTERNAL-IP`.
+
+- **En el portal de Azure**:
+  1) Ve a tu clúster AKS → **Services and ingresses**.
+  2) Selecciona el servicio `azure-vote-front`.
+  3) Verás la IP pública asignada.
+
+> ⚠️ Puede tardar unos minutos en aparecer; mientras tanto el valor se mostrará como `<pending>`.
+
+#### ¿Dónde ver los workloads desplegados?
+
+Puedes verificar los workloads (deployments/pods) en el namespace `cp2`:
+
+```sh
+kubectl get deployments,pods -n cp2
+```
+
+O bien desde el portal de Azure en **Workloads → Deployments** (y **Pods**) dentro del clúster.
+
+Esto indica que la aplicación desplegada está accesible públicamente cuando la IP pública se haya provisionado.
 
 Podemos validar que el contenedor se ha desplegado correctamente y que está sirviendo en el puerto `80`:
 
 ```sh
-kubectl logs -n cp2 -l app=stackedit
+kubectl logs -n cp2 -l app=azure-vote-front
 ```
 
-Resultado:
+Resultado (ejemplo):
 
 ```
-HTTP server started: http://localhost:8080
+HTTP server started: http://localhost:80
 ```
 
-Por tanto, accediendo desde el navegador a `http://74.178.201.19` se podrá visualizar la interfaz web de StackEdit.
+Por tanto, accediendo desde el navegador a la IP pública que devuelva el servicio (`kubectl get svc -n cp2 azure-vote-front`) se podrá visualizar la aplicación.
 
-![web-aks-stackedit](../assets/images/screenshot-web-stackedit-aks.png)
+![web-aks-azure-vote](../assets/images/screenshot-web-vote-front-aks.png)
 
 Esto confirma que el despliegue en AKS se ha realizado con éxito, con el contenedor sirviendo desde la imagen publicada en el ACR.
 
@@ -523,26 +538,28 @@ Esto confirma que el despliegue en AKS se ha realizado con éxito, con el conten
 
 Para validar que el contenedor desplegado en AKS cuenta con almacenamiento persistente, se realiza la siguiente prueba:
 
-1. **Crear una nota** desde la interfaz web de StackEdit accediendo a `http://74.178.201.19`.
+1. **Crear una entrada** desde la interfaz web de la aplicación accediendo a `http://<EXTERNAL-IP>`.
 
-Se añade una nueva nota con el siguiente contenido:
+Se añade un texto como el siguiente (esto se guarda en el volumen persistente del pod):
 
 ```markdown
-# HelloWorld from the Cloud 🚀  
-_“Bienvenido al desierto de lo real.” — Morfeo_
+# Persistencia en AKS
+_“Este contenido debe sobrevivir al reinicio del pod.”_
 ```
 
-![markdown-note](../assets/images/screenshot-markdown-note.png)
+![web-aks-azure-vote](../assets/images/screenshot-web-vote-front-aks.png)
+
 2. **Eliminar el pod** para forzar su recreación automática por Kubernetes:
 
 ```sh
-kubectl delete pod -n cp2 -l app=stackedit
+kubectl delete pod -n cp2 -l app=azure-vote-front
 ```
 
-Desde Lens podemos ver como se recrea el contenedor.
+Desde Lens (o `kubectl get pods -n cp2`) se puede ver cómo se recrea el pod.
 
-  ![lens-pod](../assets/images/screenshot-lens-pod.png)
-3. **Actualizar la página web** tras unos segundos.  
-La nota debería seguir estando presente, lo que confirma que el volumen persistente está funcionando correctamente.
+![lens-pod](../assets/images/screenshot-lens-pod.png)
 
-![markdown-note](../assets/images/screenshot-markdown-note.png)
+3. **Actualizar la página web** tras unos segundos.
+La entrada debería seguir estando presente, lo que confirma que el volumen persistente está funcionando correctamente.
+
+![web-aks-azure-vote](../assets/images/screenshot-web-vote-front-aks.png)

@@ -40,7 +40,7 @@ terraform {
 
 # Configuración del proveedor de Azure
 provider "azurerm" {
-  subscription_id = "fb24fc1f-67e2-4871-8be2-c10a36e74c93"
+  subscription_id = "fb24fc1f-67e2-4871-8be2-c10a36e74c93"  # Suscripción usada en este proyecto
   features {}
 }
 
@@ -49,7 +49,7 @@ locals {
   env_suffix = "-${var.environment}"
 }
 
-# Crear un grupo de recursos en West Europe
+# Crear un grupo de recursos en Canada Central (canadacentral)
 resource "azurerm_resource_group" "rg" {
   name     = "${var.resource_group_name}-${var.environment}"
   location = var.location
@@ -142,23 +142,24 @@ Se establece un entorno de desarrollo (`dev`), una máquina virtual con especifi
 
 ```hcl title="terraform.tfvars"
 # Generic
-resource_group_name = "rg-weu-cp2"
-location            = "West Europe"
+resource_group_name = "rg-cnd-cp2"
+location            = "Canada Central"
 environment         = "dev"
 
 # ACR
-acr_name            = "acrweucp2"
+acr_name            = "acrcndcp2"
 
 # virtual machine
-vm_name             = "vm-weu-cp2-docs"
+vm_name             = "vm-cnd-cp2-docs"
 vm_username         = "darioreyesr25"
-vm_size             = "Standard_B1ms"   # "Standard_B1ls"
-ssh_public_key      = "~/.ssh/az_unir_rsa.pub"
+vm_size             = "Standard_B2ls_v2"
+# "Standard_B1ls" sin suficiente memoria
+ssh_public_key      = "C:\\Users\\dario\\.ssh\\id_rsa.pub"
 python_interpreter  = "/usr/bin/python3"
 
 # Networking
-vnet_name           = "vnet-weu-cp2"
-subnet_name         = "subnet-weu-cp2"
+vnet_name           = "vnet-cnd-cp2"
+subnet_name         = "subnet-cnd-cp2"
 subnet_cidr         = "10.0.1.0/28"
 
 # Image
@@ -167,8 +168,8 @@ image_offer         = "0001-com-ubuntu-server-jammy"
 # check offers here: https://documentation.ubuntu.com/azure/en/latest/azure-how-to/instances/find-ubuntu-images/
 
 # AKS
-aks_name            = "aks-weu-cp2"
-dns_prefix          = "aksweucp2"
+aks_name            = "aks-cnd-cp2"
+dns_prefix          = "akscndcp2"
 node_count          = 1
 aks_vm_size         = "Standard_B2ls_v2"
 

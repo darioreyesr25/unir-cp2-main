@@ -16,9 +16,9 @@ La documentación también está disponible a través de **GitHub Pages**, lo qu
 
 ### Imágen con persistencia para el AKS
 
-La imagen desplegada en el clúster de **AKS** está basada en **StackEdit**, una aplicación web de código abierto que permite editar y guardar documentos en formato Markdown directamente desde el navegador. Esta herramienta es ideal para la toma de notas técnicas o redacción de documentación rápida, ya que ofrece previsualización en tiempo real y sincronización con almacenamiento local y en la nube [(StackEdit, s.f.)](../referencias.md#herramientas-usadas).
+La imagen desplegada en el clúster de **AKS** está basada en **Azure Vote Front**, el frontend de ejemplo utilizado en las demos de Kubernetes, que se comunica con un backend Redis para almacenar el recuento de votos. Esta aplicación sirve como ejemplo de una aplicación con persistencia en Kubernetes y permite validar que los datos no se pierden al reiniciar o reprogramar el pod.
 
-Para este ejercicio se ha utilizado la imagen pública disponible en Docker Hub: [`benweet/stackedit`](https://hub.docker.com/r/benweet/stackedit), la cual se despliega en un contenedor dentro de Kubernetes con un volumen persistente asociado. Esto garantiza que el contenido creado por el usuario, como notas o documentos, **no se pierde** aunque el contenedor se reinicie o se reprograme, validando así la persistencia de los datos en un entorno dinámico.
+Para este ejercicio se ha utilizado la imagen pública disponible en Docker Hub: [`jsosa15/azure-vote-front:v1`](https://hub.docker.com/r/jsosa15/azure-vote-front), la cual se despliega en un contenedor dentro de Kubernetes con un volumen persistente asociado. Esto permite comprobar que la configuración de PersistentVolumeClaim y StorageClass funciona correctamente y que los datos se mantienen tras reinicios del pod.
 
 ## Configuración con Ansible 
 
@@ -116,7 +116,7 @@ Clona el repositorio del proyecto en la máquina virtual, instala dependencias n
 ---
 - name: Ensure repository is present on the VM
   git:
-    repo: "https://github.com/darioreyesr25/unir-cp2.git"
+    repo: "https://github.com/darioreyesr25/unir-cp2-main.git"
     dest: "/opt/unir-cp2"
     version: main
 
@@ -184,25 +184,40 @@ Etiqueta la imagen generada de MkDocs con el formato adecuado para ACR y la sube
 
 ```
 
-#### Publicar imagen `stackedit`
+#### Publicar imagen `azure-vote-front`
 
-Descarga la imagen `stackedit-base` desde Docker Hub, la etiqueta para el ACR y finalmente la sube al registro de Azure.
+Descarga la imagen `jsosa15/azure-vote-front:v1` desde Docker Hub, la etiqueta para el ACR y finalmente la sube al registro de Azure. También se publica la imagen `redis:7.0` que se utiliza como backend.
 
-```yaml title="push_stackedit.yml"
+```yaml title="push_aks_images.yml"
 ---
-- name: Pull StackEdit image from Docker Hub
+- name: Pull Azure Vote Front image from Docker Hub
   command: >
-    podman pull docker.io/benweet/stackedit-base:latest
+    podman pull docker.io/jsosa15/azure-vote-front:v1
   become: yes
 
-- name: Tag StackEdit image for ACR
+- name: Tag Azure Vote Front image for ACR
   command: >
-    podman tag docker.io/benweet/stackedit-base:latest {{ acr_name }}.azurecr.io/{{ image_name_stackedit }}:{{ image_tag_stackedit }}
+    podman tag docker.io/jsosa15/azure-vote-front:v1 {{ acr_name }}.azurecr.io/{{ image_name_k8s_front }}:{{ image_tag_k8s_front }}
   become: yes
 
-- name: Push StackEdit image to ACR
+- name: Push Azure Vote Front image to ACR
   command: >
-    podman push {{ acr_name }}.azurecr.io/{{ image_name_stackedit }}:{{ image_tag_stackedit }}
+    podman push {{ acr_name }}.azurecr.io/{{ image_name_k8s_front }}:{{ image_tag_k8s_front }}
+  become: yes
+
+- name: Pull Redis image from Docker Hub
+  command: >
+    podman pull docker.io/library/redis:7.0
+  become: yes
+
+- name: Tag Redis image for ACR
+  command: >
+    podman tag docker.io/library/redis:7.0 {{ acr_name }}.azurecr.io/{{ image_name_k8s_back }}:{{ image_tag_k8s_back }}
+  become: yes
+
+- name: Push Redis image to ACR
+  command: >
+    podman push {{ acr_name }}.azurecr.io/{{ image_name_k8s_back }}:{{ image_tag_k8s_back }}
   become: yes
 ```
 
@@ -396,7 +411,7 @@ Esta tarea crea un `Secret` en el clúster de AKS con las credenciales necesaria
         name: acr-secret
       type: kubernetes.io/dockerconfigjson
       data:
-        .dockerconfigjson: "{{ lookup('template', 'acr-auth.json.j2') | from_yaml | to_json | b64encode }}"
+        .dockerconfigjson: "&#123;&#123; lookup('template', 'acr-auth.json.j2') &#124; from_yaml &#124; to_json &#124; b64encode &#125;&#125;"
 ```
 {% endraw %}
 
@@ -409,7 +424,7 @@ El secreto se genera a partir de la plantilla `acr-auth.json.j2`, que contiene l
     "{{ acr_name }}.azurecr.io": {
       "username": "{{ acr_username }}",
       "password": "{{ acr_password }}",
-      "auth": "{{ (acr_username + ':' + acr_password) | b64encode }}"
+      "auth": "&#123;&#123; (acr_username + ':' + acr_password) &#124; b64encode &#125;&#125;"
     }
   }
 }
@@ -450,7 +465,7 @@ spec:
 
 #### Desplegar aplicación
 
-Esta tarea aplica el `Deployment` de Kubernetes necesario para ejecutar la aplicación StackEdit. Se especifica la imagen publicada en el ACR, el puerto interno del contenedor, el volumen persistente y las credenciales de acceso al registro.
+Esta tarea aplica el `Deployment` de Kubernetes necesario para ejecutar el frontend (`azure-vote-front`) y el backend (`redis`) en el clúster. El manifiesto utiliza las imágenes publicadas en el ACR y configura el `imagePullSecret` para poder acceder al registro privado.
 
 {% raw %}
 ```yaml title="deploy.yml"
@@ -462,40 +477,67 @@ Esta tarea aplica el `Deployment` de Kubernetes necesario para ejecutar la aplic
 ```
 {% endraw %}
 
-La plantilla del manifiesto define una réplica del contenedor con puerto interno `8080` y volumen montado en `/data`:
+La plantilla del manifiesto define dos `Deployment` (frontend y backend) y utiliza un `PersistentVolumeClaim` para el backend Redis.
 
 {% raw %}
 ```yaml title="deployment.yml.j2"
 ---
+# Backend (Redis)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: stackedit
+  name: {{ back_deployment_name }}
+  namespace: {{ k8s_namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: stackedit
+      app: {{ back_deployment_name }}
   template:
     metadata:
       labels:
-        app: stackedit
+        app: {{ back_deployment_name }}
     spec:
       containers:
-      - name: stackedit
-        image: "{{ acr_name }}.azurecr.io/{{ image_name_stackedit }}:{{ image_tag_stackedit }}"
+      - name: {{ back_deployment_name }}
+        image: "{{ acr_name }}.azurecr.io/{{ image_name_k8s_back }}:{{ image_tag_k8s_back }}"
         ports:
-        - containerPort: 8080
+        - containerPort: 6379
         volumeMounts:
-        - name: storage
+        - name: data
           mountPath: "/data"
-        env:
-        - name: ENV_VAR
-          value: "example-value"
       volumes:
-      - name: storage
+      - name: data
         persistentVolumeClaim:
           claimName: {{ pvc_name }}
+      imagePullSecrets:
+      - name: acr-secret
+
+---
+# Frontend (Azure Vote)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ front_deployment_name }}
+  namespace: {{ k8s_namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ front_deployment_name }}
+  template:
+    metadata:
+      labels:
+        app: {{ front_deployment_name }}
+    spec:
+      containers:
+      - name: {{ front_deployment_name }}
+        image: "{{ acr_name }}.azurecr.io/{{ image_name_k8s_front }}:{{ image_tag_k8s_front }}"
+        ports:
+        - containerPort: 80
+        env:
+        - name: REDIS
+          value: "{{ back_service_name }}"
       imagePullSecrets:
       - name: acr-secret
 ```

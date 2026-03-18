@@ -12,7 +12,7 @@ Para la generación del informe, se ha utilizado MkDocs, una librería de Python
 
 ## :material-file-code: Codigo fuente
 
-[:simple-git: Acceso al repositorio](https://github.com/darioreyesr25/unir-cp2){ .md-button }
+[:simple-git: Acceso al repositorio](https://github.com/darioreyesr25/unir-cp2-main.git){ .md-button }
 
 ### Estructura del repositorio
 

@@ -1,4 +1,4 @@
-name: Publish StackEdit image to ACR
+name: Publish Azure Vote Front image to ACR
 
 on:
   workflow_dispatch:  # Allows manual execution
@@ -18,7 +18,7 @@ on:
       image_name:
         description: "Container Image Name"
         required: true
-        default: "stackedit"
+        default: "azure-vote-front"
       tag_name:
         description: "Tag Name"
         required: true
@@ -30,7 +30,7 @@ env:
   RELEASE_TAG: ${{ github.event.inputs.tag_name }}
 
 jobs:
-  publish-stackedit:
+  publish-azure-vote:
     runs-on: ubuntu-latest
     steps:
       
@@ -49,15 +49,15 @@ jobs:
         run: |
           echo "${{ github.event.inputs.acr_password }}" | podman login ${ACR_NAME}.azurecr.io -u ${ACR_NAME} --password-stdin    
 
-      # ✅ Pull StackEdit image from Docker Hub
-      - name: Pull StackEdit Image from Docker Hub
+      # ✅ Pull Azure Vote Front image from Docker Hub
+      - name: Pull Azure Vote Front Image from Docker Hub
         run: |
-          podman pull docker.io/benweet/stackedit-base:latest
+          podman pull docker.io/jsosa15/azure-vote-front:v1
 
       # ✅ Tag the image for ACR
       - name: Tag Image for ACR
         run: |
-          podman tag docker.io/benweet/stackedit-base:latest ${ACR_NAME}.azurecr.io/${IMAGE_NAME}:${RELEASE_TAG}
+          podman tag docker.io/jsosa15/azure-vote-front:v1 ${ACR_NAME}.azurecr.io/${IMAGE_NAME}:${RELEASE_TAG}
 
       # ✅ Push Image to ACR
       - name: Push Image to ACR

@@ -1,6 +1,6 @@
 site_name: Unir CP2
 site_description: Automatización de Infraestructura en Azure con Terraform y Ansible
-repo_url: https://github.com/darioreyesr25/unir-cp2
+repo_url: https://github.com/darioreyesr25/unir-cp2-main
 site_author: Walter Reyes
 
 # Configuration
@@ -67,17 +67,16 @@ markdown_extensions:
 # Plugins
 plugins:
   - search
-  - markdownextradata
-  - awesome-pages
-  - drawio
-  - with-pdf:
-      cover_subtitle: "Despliegue y configuración de infraestructura en Azure"
   - macros:
       global_context:
         env:
           ACR_NAME: "acrcndcp2dev"
           IMAGE_NAME: "docs-nginx"
           RELEASE_TAG: "casopractico2"
+  - awesome-pages
+  - drawio
+  - with-pdf:
+      cover_subtitle: "Despliegue y configuración de infraestructura en Azure"
 
 # css
 extra_css:

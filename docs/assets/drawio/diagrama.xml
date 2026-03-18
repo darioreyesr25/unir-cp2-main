@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-03-17T00:00:00.000Z" agent="5.0 (Windows)" etag="123" version="20.4.4" type="device">
+  <diagram id="diagram-1" name="Arquitectura">
+    <mxGraphModel dx="1084" dy="741" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        
+        <!-- Usuario / Internet -->
+        <mxCell id="user" value="Usuario / Navegador" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#1a73e8;fillColor=#e8f0fe;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="50" y="70" width="140" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- LoadBalancer -->
+        <mxCell id="lb" value="Load Balancer (AKS Service)" style="rounded;whiteSpace=wrap;html=1;strokeColor=#0b8043;fillColor=#e6f4ea;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="230" y="70" width="200" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- AKS Cluster -->
+        <mxCell id="aks" value="AKS (Cluster)" style="rounded;whiteSpace=wrap;html=1;strokeColor=#3367d6;fillColor=#e8f0fe;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="230" y="170" width="380" height="280" as="geometry"/>
+        </mxCell>
+
+        <!-- Frontend Deployment -->
+        <mxCell id="frontend" value="azure-vote-front\n(Deployment)" style="rounded;whiteSpace=wrap;html=1;strokeColor=#1a73e8;fillColor=#ffffff;fontSize=11;" vertex="1" parent="aks">
+          <mxGeometry x="30" y="30" width="160" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Redis Deployment -->
+        <mxCell id="redis" value="redis\n(Deployment + PVC)" style="rounded;whiteSpace=wrap;html=1;strokeColor=#1a73e8;fillColor=#ffffff;fontSize=11;" vertex="1" parent="aks">
+          <mxGeometry x="210" y="30" width="160" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- ACR -->
+        <mxCell id="acr" value="ACR (acrcndcp2dev)" style="cylinder;whiteSpace=wrap;html=1;strokeColor=#fbbc05;fillColor=#fef7e0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="670" y="90" width="180" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- VM -->
+        <mxCell id="vm" value="VM Ubuntu\n(vm-cnd-cp2-docs)\nPodman (docs-nginx)\nMkDocs site" style="rounded;whiteSpace=wrap;html=1;strokeColor=#ea4335;fillColor=#fde7e9;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="670" y="260" width="180" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- Ansible Control -->
+        <mxCell id="ansible" value="Ansible (WSL)\nControl Node" style="rounded;whiteSpace=wrap;html=1;strokeColor=#8e24aa;fillColor=#f3e5f5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="50" y="240" width="180" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- Conexiones -->
+        <mxCell id="edge1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jettySize=auto;orthogonalLoop=1;strokeColor=#444444;" edge="1" parent="1" source="user" target="lb">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jettySize=auto;orthogonalLoop=1;strokeColor=#444444;" edge="1" parent="1" source="lb" target="frontend">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jettySize=auto;orthogonalLoop=1;strokeColor=#444444;" edge="1" parent="1" source="frontend" target="redis">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jettySize=auto;orthogonalLoop=1;strokeColor=#444444;endArrow=classic;" edge="1" parent="1" source="frontend" target="acr">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jettySize=auto;orthogonalLoop=1;strokeColor=#444444;endArrow=classic;" edge="1" parent="1" source="vm" target="acr">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jettySize=auto;orthogonalLoop=1;strokeColor=#444444;dashed=1;" edge="1" parent="1" source="ansible" target="vm">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;jettySize=auto;orthogonalLoop=1;strokeColor=#444444;dashed=1;" edge="1" parent="1" source="ansible" target="aks">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

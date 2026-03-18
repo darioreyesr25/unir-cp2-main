@@ -2,7 +2,7 @@
 
 Para este ejercicio se ha utilizado la licencia **MIT** (*Massachusetts Institute of Technology License*), una de las licencias más utilizadas en proyectos de código abierto. La licencia completa puede consultarse en el siguiente enlace al repositorio del proyecto:  
 
-:octicons-file-16: **[Ver archivo LICENSE](https://github.com/darioreyesr25/unir-cp2/blob/main/LICENSE)**  
+:octicons-file-16: **[Ver archivo LICENSE](https://github.com/darioreyesr25/unir-cp2-main/blob/main/LICENSE)**  
 
 ## Justificación de la elección de la licencia
 
