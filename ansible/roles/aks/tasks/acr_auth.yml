@@ -1,0 +1,7 @@
+- name: Render ACR Secret manifest
+  template:
+    src: acr-secret.yml.j2
+    dest: "/tmp/aks-acr-secret-{{ k8s_namespace }}.yaml"
+
+- name: Apply ACR Secret manifest
+  command: kubectl apply -f /tmp/aks-acr-secret-{{ k8s_namespace }}.yaml

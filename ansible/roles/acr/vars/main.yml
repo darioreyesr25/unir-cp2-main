@@ -1,0 +1,3 @@
+---
+# Role vars are intentionally kept empty so inventory vars can override defaults.
+# Any defaults should be declared in defaults/main.yml (lower precedence).

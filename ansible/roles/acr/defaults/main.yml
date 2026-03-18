@@ -1,0 +1,11 @@
+---
+# Default values for ACR role.
+# These are low-precedence defaults and can be overridden via inventory vars.
+
+# Prefer explicitly provided ACR_LOGIN_SERVER.
+# If missing, build from ACR_NAME (only when non-empty).
+# If still missing, fall back to the repo default.
+acr_login_server: >-
+  {{ (lookup('env', 'ACR_LOGIN_SERVER') | default('', true) | trim)
+      or ((lookup('env', 'ACR_NAME') | default('', true) | trim) and ((lookup('env', 'ACR_NAME') | default('', true) | trim) ~ '.azurecr.io'))
+      or 'acrcndcp2dev.azurecr.io' }}

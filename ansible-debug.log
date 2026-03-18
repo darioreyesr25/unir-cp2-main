@@ -1,0 +1,766 @@
+ansible-playbook 2.10.8
+  config file = None
+  configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python3/dist-packages/ansible
+  executable location = /usr/bin/ansible-playbook
+  python version = 3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]
+No config file found; using defaults
+host_list declined parsing /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/hosts.yml as it did not pass its verify_file() method
+Parsed /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/hosts.yml inventory source with yaml plugin
+Read vars_file './vars.yml'
+Read vars_file './vars.yml'
+statically imported: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/namespace.yml
+Read vars_file './vars.yml'
+statically imported: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/acr_auth.yml
+Read vars_file './vars.yml'
+statically imported: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/pvc.yml
+Read vars_file './vars.yml'
+statically imported: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/deploy.yml
+Read vars_file './vars.yml'
+statically imported: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/service.yml
+Skipping callback 'default', as we already have a stdout callback.
+Skipping callback 'minimal', as we already have a stdout callback.
+Skipping callback 'oneline', as we already have a stdout callback.
+
+PLAYBOOK: playbook_aks.yml *****************************************************
+1 plays in ansible/playbook_aks.yml
+Read vars_file './vars.yml'
+Read vars_file './vars.yml'
+Read vars_file './vars.yml'
+
+PLAY [Deploy Application on AKS] ***********************************************
+Read vars_file './vars.yml'
+META: ran handlers
+Read vars_file './vars.yml'
+
+TASK [aks : Gather AKS/VM hostnames from inventory (fallback for localhost runs)] ***
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/main.yml:2
+ok: [aks-cnd-cp2-dev] => {
+    "ansible_facts": {
+        "_aks_host": "aks-cnd-cp2-dev",
+        "_vm_host": "vm-cnd-cp2-docs"
+    },
+    "changed": false
+}
+Read vars_file './vars.yml'
+
+TASK [aks : Gather configuration values from inventory / environment] **********
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/main.yml:8
+ok: [aks-cnd-cp2-dev] => {
+    "ansible_facts": {
+        "acr_name": "acrcndcp2dev",
+        "acr_password": "EgZD37ms4i0F2fiGXp27SHrZiRa0z6uJ6SUGA2XvmyTZVWKlbZ2DJQQJ99CCACBsN54Eqg7NAAACAZCRLgEK",
+        "acr_username": "acrcndcp2dev",
+        "aks_cluster_name": "aks-cnd-cp2-dev",
+        "aks_resource_group": "rg-cnd-cp2-dev"
+    },
+    "changed": false
+}
+Read vars_file './vars.yml'
+
+TASK [aks : Gather facts about the system] *************************************
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/main.yml:16
+<aks-cnd-cp2-dev> ESTABLISH LOCAL CONNECTION FOR USER: root
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'echo ~root && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1773727866.882537-1846-126932481069348 `" && echo ansible-tmp-1773727866.882537-1846-126932481069348="` echo /root/.ansible/tmp/ansible-tmp-1773727866.882537-1846-126932481069348 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/setup.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmphtte6mtx TO /root/.ansible/tmp/ansible-tmp-1773727866.882537-1846-126932481069348/AnsiballZ_setup.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727866.882537-1846-126932481069348/ /root/.ansible/tmp/ansible-tmp-1773727866.882537-1846-126932481069348/AnsiballZ_setup.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727866.882537-1846-126932481069348/AnsiballZ_setup.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1773727866.882537-1846-126932481069348/ > /dev/null 2>&1 && sleep 0'
+ok: [aks-cnd-cp2-dev]
+Read vars_file './vars.yml'
+
+TASK [aks : Check if kubectl exists] *******************************************
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/main.yml:19
+<aks-cnd-cp2-dev> ESTABLISH LOCAL CONNECTION FOR USER: root
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'echo ~root && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1773727869.4031746-1941-5209205821747 `" && echo ansible-tmp-1773727869.4031746-1941-5209205821747="` echo /root/.ansible/tmp/ansible-tmp-1773727869.4031746-1941-5209205821747 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/stat.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmpw74z4f9v TO /root/.ansible/tmp/ansible-tmp-1773727869.4031746-1941-5209205821747/AnsiballZ_stat.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727869.4031746-1941-5209205821747/ /root/.ansible/tmp/ansible-tmp-1773727869.4031746-1941-5209205821747/AnsiballZ_stat.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727869.4031746-1941-5209205821747/AnsiballZ_stat.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1773727869.4031746-1941-5209205821747/ > /dev/null 2>&1 && sleep 0'
+ok: [aks-cnd-cp2-dev] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "checksum_algorithm": "sha1",
+            "follow": false,
+            "get_attributes": true,
+            "get_checksum": true,
+            "get_md5": false,
+            "get_mime": true,
+            "path": "/usr/local/bin/kubectl"
+        }
+    },
+    "stat": {
+        "atime": 1773727275.2660434,
+        "attr_flags": "e",
+        "attributes": [
+            "extents"
+        ],
+        "block_size": 4096,
+        "blocks": 114464,
+        "charset": "binary",
+        "checksum": "4929d6b2f7368180eec19f76f2dfe60acc9765e7",
+        "ctime": 1773727275.2620435,
+        "dev": 2096,
+        "device_type": 0,
+        "executable": true,
+        "exists": true,
+        "gid": 0,
+        "gr_name": "root",
+        "inode": 106284,
+        "isblk": false,
+        "ischr": false,
+        "isdir": false,
+        "isfifo": false,
+        "isgid": false,
+        "islnk": false,
+        "isreg": true,
+        "issock": false,
+        "isuid": false,
+        "mimetype": "application/x-executable",
+        "mode": "0755",
+        "mtime": 1773727275.2300434,
+        "nlink": 1,
+        "path": "/usr/local/bin/kubectl",
+        "pw_name": "root",
+        "readable": true,
+        "rgrp": true,
+        "roth": true,
+        "rusr": true,
+        "size": 58601656,
+        "uid": 0,
+        "version": "2535335228",
+        "wgrp": false,
+        "woth": false,
+        "writeable": true,
+        "wusr": true,
+        "xgrp": true,
+        "xoth": true,
+        "xusr": true
+    }
+}
+Read vars_file './vars.yml'
+
+TASK [aks : Determine latest stable kubectl version] ***************************
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/main.yml:24
+skipping: [aks-cnd-cp2-dev] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+Read vars_file './vars.yml'
+
+TASK [aks : Download kubectl binary] *******************************************
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/main.yml:31
+skipping: [aks-cnd-cp2-dev] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+Read vars_file './vars.yml'
+
+TASK [aks : Ensure kubectl is configured for AKS] ******************************
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/main.yml:39
+<aks-cnd-cp2-dev> ESTABLISH LOCAL CONNECTION FOR USER: root
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'echo ~root && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1773727869.7811031-1982-149689117006946 `" && echo ansible-tmp-1773727869.7811031-1982-149689117006946="` echo /root/.ansible/tmp/ansible-tmp-1773727869.7811031-1982-149689117006946 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/command.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmppjocas6b TO /root/.ansible/tmp/ansible-tmp-1773727869.7811031-1982-149689117006946/AnsiballZ_command.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727869.7811031-1982-149689117006946/ /root/.ansible/tmp/ansible-tmp-1773727869.7811031-1982-149689117006946/AnsiballZ_command.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727869.7811031-1982-149689117006946/AnsiballZ_command.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1773727869.7811031-1982-149689117006946/ > /dev/null 2>&1 && sleep 0'
+changed: [aks-cnd-cp2-dev] => {
+    "changed": true,
+    "cmd": [
+        "az",
+        "aks",
+        "get-credentials",
+        "-g",
+        "rg-cnd-cp2-dev",
+        "-n",
+        "aks-cnd-cp2-dev",
+        "--overwrite-existing"
+    ],
+    "delta": "0:00:01.467602",
+    "end": "2026-03-17 01:11:11.446712",
+    "invocation": {
+        "module_args": {
+            "_raw_params": "az aks get-credentials -g \"rg-cnd-cp2-dev\" -n \"aks-cnd-cp2-dev\" --overwrite-existing",
+            "_uses_shell": false,
+            "argv": null,
+            "chdir": null,
+            "creates": null,
+            "executable": null,
+            "removes": null,
+            "stdin": null,
+            "stdin_add_newline": true,
+            "strip_empty_ends": true,
+            "warn": true
+        }
+    },
+    "rc": 0,
+    "start": "2026-03-17 01:11:09.979110",
+    "stderr": "WARNING: Merged \"aks-cnd-cp2-dev\" as current context in /root/.kube/config",
+    "stderr_lines": [
+        "WARNING: Merged \"aks-cnd-cp2-dev\" as current context in /root/.kube/config"
+    ],
+    "stdout": "",
+    "stdout_lines": []
+}
+Read vars_file './vars.yml'
+
+TASK [aks : Render Namespace manifest] *****************************************
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/namespace.yml:2
+<aks-cnd-cp2-dev> ESTABLISH LOCAL CONNECTION FOR USER: root
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'echo ~root && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1773727871.5106905-2020-91880370702146 `" && echo ansible-tmp-1773727871.5106905-2020-91880370702146="` echo /root/.ansible/tmp/ansible-tmp-1773727871.5106905-2020-91880370702146 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/stat.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmpauztgajx TO /root/.ansible/tmp/ansible-tmp-1773727871.5106905-2020-91880370702146/AnsiballZ_stat.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727871.5106905-2020-91880370702146/ /root/.ansible/tmp/ansible-tmp-1773727871.5106905-2020-91880370702146/AnsiballZ_stat.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727871.5106905-2020-91880370702146/AnsiballZ_stat.py && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/file.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmpchawix0b TO /root/.ansible/tmp/ansible-tmp-1773727871.5106905-2020-91880370702146/AnsiballZ_file.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727871.5106905-2020-91880370702146/ /root/.ansible/tmp/ansible-tmp-1773727871.5106905-2020-91880370702146/AnsiballZ_file.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727871.5106905-2020-91880370702146/AnsiballZ_file.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1773727871.5106905-2020-91880370702146/ > /dev/null 2>&1 && sleep 0'
+ok: [aks-cnd-cp2-dev] => {
+    "changed": false,
+    "checksum": "21772fe305b0c4bfa07c75505530b2323491858d",
+    "dest": "/tmp/aks-namespace-cp2.yaml",
+    "diff": {
+        "after": {
+            "path": "/tmp/aks-namespace-cp2.yaml"
+        },
+        "before": {
+            "path": "/tmp/aks-namespace-cp2.yaml"
+        }
+    },
+    "gid": 0,
+    "group": "root",
+    "invocation": {
+        "module_args": {
+            "_diff_peek": null,
+            "_original_basename": "namespace.yml.j2",
+            "access_time": null,
+            "access_time_format": "%Y%m%d%H%M.%S",
+            "attributes": null,
+            "dest": "/tmp/aks-namespace-cp2.yaml",
+            "follow": true,
+            "force": false,
+            "group": null,
+            "mode": null,
+            "modification_time": null,
+            "modification_time_format": "%Y%m%d%H%M.%S",
+            "owner": null,
+            "path": "/tmp/aks-namespace-cp2.yaml",
+            "recurse": false,
+            "selevel": null,
+            "serole": null,
+            "setype": null,
+            "seuser": null,
+            "src": null,
+            "state": "file",
+            "unsafe_writes": false
+        }
+    },
+    "mode": "0644",
+    "owner": "root",
+    "path": "/tmp/aks-namespace-cp2.yaml",
+    "size": 53,
+    "state": "file",
+    "uid": 0
+}
+Read vars_file './vars.yml'
+
+TASK [aks : Apply Namespace manifest] ******************************************
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/namespace.yml:7
+<aks-cnd-cp2-dev> ESTABLISH LOCAL CONNECTION FOR USER: root
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'echo ~root && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1773727872.039376-2056-15093401511399 `" && echo ansible-tmp-1773727872.039376-2056-15093401511399="` echo /root/.ansible/tmp/ansible-tmp-1773727872.039376-2056-15093401511399 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/command.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmp4da4u02a TO /root/.ansible/tmp/ansible-tmp-1773727872.039376-2056-15093401511399/AnsiballZ_command.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727872.039376-2056-15093401511399/ /root/.ansible/tmp/ansible-tmp-1773727872.039376-2056-15093401511399/AnsiballZ_command.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727872.039376-2056-15093401511399/AnsiballZ_command.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1773727872.039376-2056-15093401511399/ > /dev/null 2>&1 && sleep 0'
+changed: [aks-cnd-cp2-dev] => {
+    "changed": true,
+    "cmd": [
+        "kubectl",
+        "apply",
+        "-f",
+        "/tmp/aks-namespace-cp2.yaml"
+    ],
+    "delta": "0:00:00.796557",
+    "end": "2026-03-17 01:11:12.951261",
+    "invocation": {
+        "module_args": {
+            "_raw_params": "kubectl apply -f /tmp/aks-namespace-cp2.yaml",
+            "_uses_shell": false,
+            "argv": null,
+            "chdir": null,
+            "creates": null,
+            "executable": null,
+            "removes": null,
+            "stdin": null,
+            "stdin_add_newline": true,
+            "strip_empty_ends": true,
+            "warn": true
+        }
+    },
+    "rc": 0,
+    "start": "2026-03-17 01:11:12.154704",
+    "stderr": "",
+    "stderr_lines": [],
+    "stdout": "namespace/cp2 unchanged",
+    "stdout_lines": [
+        "namespace/cp2 unchanged"
+    ]
+}
+Read vars_file './vars.yml'
+
+TASK [aks : Render ACR Secret manifest] ****************************************
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/acr_auth.yml:1
+<aks-cnd-cp2-dev> ESTABLISH LOCAL CONNECTION FOR USER: root
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'echo ~root && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1773727873.0242581-2100-37069011258585 `" && echo ansible-tmp-1773727873.0242581-2100-37069011258585="` echo /root/.ansible/tmp/ansible-tmp-1773727873.0242581-2100-37069011258585 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/stat.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmpqob2ruo9 TO /root/.ansible/tmp/ansible-tmp-1773727873.0242581-2100-37069011258585/AnsiballZ_stat.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727873.0242581-2100-37069011258585/ /root/.ansible/tmp/ansible-tmp-1773727873.0242581-2100-37069011258585/AnsiballZ_stat.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727873.0242581-2100-37069011258585/AnsiballZ_stat.py && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/file.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmpgyowlyzy TO /root/.ansible/tmp/ansible-tmp-1773727873.0242581-2100-37069011258585/AnsiballZ_file.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727873.0242581-2100-37069011258585/ /root/.ansible/tmp/ansible-tmp-1773727873.0242581-2100-37069011258585/AnsiballZ_file.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727873.0242581-2100-37069011258585/AnsiballZ_file.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1773727873.0242581-2100-37069011258585/ > /dev/null 2>&1 && sleep 0'
+ok: [aks-cnd-cp2-dev] => {
+    "changed": false,
+    "checksum": "e7e5890612f6b1075cbe9e432b4e91794c40daf9",
+    "dest": "/tmp/aks-acr-secret-cp2.yaml",
+    "diff": {
+        "after": {
+            "path": "/tmp/aks-acr-secret-cp2.yaml"
+        },
+        "before": {
+            "path": "/tmp/aks-acr-secret-cp2.yaml"
+        }
+    },
+    "gid": 0,
+    "group": "root",
+    "invocation": {
+        "module_args": {
+            "_diff_peek": null,
+            "_original_basename": "acr-secret.yml.j2",
+            "access_time": null,
+            "access_time_format": "%Y%m%d%H%M.%S",
+            "attributes": null,
+            "dest": "/tmp/aks-acr-secret-cp2.yaml",
+            "follow": true,
+            "force": false,
+            "group": null,
+            "mode": null,
+            "modification_time": null,
+            "modification_time_format": "%Y%m%d%H%M.%S",
+            "owner": null,
+            "path": "/tmp/aks-acr-secret-cp2.yaml",
+            "recurse": false,
+            "selevel": null,
+            "serole": null,
+            "setype": null,
+            "seuser": null,
+            "src": null,
+            "state": "file",
+            "unsafe_writes": false
+        }
+    },
+    "mode": "0644",
+    "owner": "root",
+    "path": "/tmp/aks-acr-secret-cp2.yaml",
+    "size": 557,
+    "state": "file",
+    "uid": 0
+}
+Read vars_file './vars.yml'
+
+TASK [aks : Apply ACR Secret manifest] *****************************************
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/acr_auth.yml:6
+<aks-cnd-cp2-dev> ESTABLISH LOCAL CONNECTION FOR USER: root
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'echo ~root && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1773727873.4265692-2136-46687635557365 `" && echo ansible-tmp-1773727873.4265692-2136-46687635557365="` echo /root/.ansible/tmp/ansible-tmp-1773727873.4265692-2136-46687635557365 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/command.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmp_zsx10ei TO /root/.ansible/tmp/ansible-tmp-1773727873.4265692-2136-46687635557365/AnsiballZ_command.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727873.4265692-2136-46687635557365/ /root/.ansible/tmp/ansible-tmp-1773727873.4265692-2136-46687635557365/AnsiballZ_command.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727873.4265692-2136-46687635557365/AnsiballZ_command.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1773727873.4265692-2136-46687635557365/ > /dev/null 2>&1 && sleep 0'
+changed: [aks-cnd-cp2-dev] => {
+    "changed": true,
+    "cmd": [
+        "kubectl",
+        "apply",
+        "-f",
+        "/tmp/aks-acr-secret-cp2.yaml"
+    ],
+    "delta": "0:00:00.866177",
+    "end": "2026-03-17 01:11:14.412083",
+    "invocation": {
+        "module_args": {
+            "_raw_params": "kubectl apply -f /tmp/aks-acr-secret-cp2.yaml",
+            "_uses_shell": false,
+            "argv": null,
+            "chdir": null,
+            "creates": null,
+            "executable": null,
+            "removes": null,
+            "stdin": null,
+            "stdin_add_newline": true,
+            "strip_empty_ends": true,
+            "warn": true
+        }
+    },
+    "rc": 0,
+    "start": "2026-03-17 01:11:13.545906",
+    "stderr": "",
+    "stderr_lines": [],
+    "stdout": "secret/acr-secret unchanged",
+    "stdout_lines": [
+        "secret/acr-secret unchanged"
+    ]
+}
+Read vars_file './vars.yml'
+
+TASK [aks : Render PVC manifest] ***********************************************
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/pvc.yml:1
+<aks-cnd-cp2-dev> ESTABLISH LOCAL CONNECTION FOR USER: root
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'echo ~root && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1773727874.4844496-2180-222916103587502 `" && echo ansible-tmp-1773727874.4844496-2180-222916103587502="` echo /root/.ansible/tmp/ansible-tmp-1773727874.4844496-2180-222916103587502 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/stat.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmptsblav9r TO /root/.ansible/tmp/ansible-tmp-1773727874.4844496-2180-222916103587502/AnsiballZ_stat.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727874.4844496-2180-222916103587502/ /root/.ansible/tmp/ansible-tmp-1773727874.4844496-2180-222916103587502/AnsiballZ_stat.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727874.4844496-2180-222916103587502/AnsiballZ_stat.py && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/file.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmpevbfamlx TO /root/.ansible/tmp/ansible-tmp-1773727874.4844496-2180-222916103587502/AnsiballZ_file.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727874.4844496-2180-222916103587502/ /root/.ansible/tmp/ansible-tmp-1773727874.4844496-2180-222916103587502/AnsiballZ_file.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727874.4844496-2180-222916103587502/AnsiballZ_file.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1773727874.4844496-2180-222916103587502/ > /dev/null 2>&1 && sleep 0'
+ok: [aks-cnd-cp2-dev] => {
+    "changed": false,
+    "checksum": "9439ad485e73e7106d0d1092a17bc5cffcb74aba",
+    "dest": "/tmp/aks-pvc-redis-data-pvc.yaml",
+    "diff": {
+        "after": {
+            "path": "/tmp/aks-pvc-redis-data-pvc.yaml"
+        },
+        "before": {
+            "path": "/tmp/aks-pvc-redis-data-pvc.yaml"
+        }
+    },
+    "gid": 0,
+    "group": "root",
+    "invocation": {
+        "module_args": {
+            "_diff_peek": null,
+            "_original_basename": "pvc.yml.j2",
+            "access_time": null,
+            "access_time_format": "%Y%m%d%H%M.%S",
+            "attributes": null,
+            "dest": "/tmp/aks-pvc-redis-data-pvc.yaml",
+            "follow": true,
+            "force": false,
+            "group": null,
+            "mode": null,
+            "modification_time": null,
+            "modification_time_format": "%Y%m%d%H%M.%S",
+            "owner": null,
+            "path": "/tmp/aks-pvc-redis-data-pvc.yaml",
+            "recurse": false,
+            "selevel": null,
+            "serole": null,
+            "setype": null,
+            "seuser": null,
+            "src": null,
+            "state": "file",
+            "unsafe_writes": false
+        }
+    },
+    "mode": "0644",
+    "owner": "root",
+    "path": "/tmp/aks-pvc-redis-data-pvc.yaml",
+    "size": 195,
+    "state": "file",
+    "uid": 0
+}
+Read vars_file './vars.yml'
+
+TASK [aks : Apply PVC manifest] ************************************************
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/pvc.yml:6
+<aks-cnd-cp2-dev> ESTABLISH LOCAL CONNECTION FOR USER: root
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'echo ~root && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1773727874.8421152-2216-28710531706986 `" && echo ansible-tmp-1773727874.8421152-2216-28710531706986="` echo /root/.ansible/tmp/ansible-tmp-1773727874.8421152-2216-28710531706986 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/command.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmpm3huvlbo TO /root/.ansible/tmp/ansible-tmp-1773727874.8421152-2216-28710531706986/AnsiballZ_command.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727874.8421152-2216-28710531706986/ /root/.ansible/tmp/ansible-tmp-1773727874.8421152-2216-28710531706986/AnsiballZ_command.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727874.8421152-2216-28710531706986/AnsiballZ_command.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1773727874.8421152-2216-28710531706986/ > /dev/null 2>&1 && sleep 0'
+changed: [aks-cnd-cp2-dev] => {
+    "changed": true,
+    "cmd": [
+        "kubectl",
+        "apply",
+        "-f",
+        "/tmp/aks-pvc-redis-data-pvc.yaml"
+    ],
+    "delta": "0:00:00.792312",
+    "end": "2026-03-17 01:11:15.747593",
+    "invocation": {
+        "module_args": {
+            "_raw_params": "kubectl apply -f /tmp/aks-pvc-redis-data-pvc.yaml",
+            "_uses_shell": false,
+            "argv": null,
+            "chdir": null,
+            "creates": null,
+            "executable": null,
+            "removes": null,
+            "stdin": null,
+            "stdin_add_newline": true,
+            "strip_empty_ends": true,
+            "warn": true
+        }
+    },
+    "rc": 0,
+    "start": "2026-03-17 01:11:14.955281",
+    "stderr": "",
+    "stderr_lines": [],
+    "stdout": "persistentvolumeclaim/redis-data-pvc unchanged",
+    "stdout_lines": [
+        "persistentvolumeclaim/redis-data-pvc unchanged"
+    ]
+}
+Read vars_file './vars.yml'
+
+TASK [aks : Render Deployment manifest] ****************************************
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/deploy.yml:1
+<aks-cnd-cp2-dev> ESTABLISH LOCAL CONNECTION FOR USER: root
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'echo ~root && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1773727875.8178527-2261-80269338669422 `" && echo ansible-tmp-1773727875.8178527-2261-80269338669422="` echo /root/.ansible/tmp/ansible-tmp-1773727875.8178527-2261-80269338669422 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/stat.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmpwsk0qb4l TO /root/.ansible/tmp/ansible-tmp-1773727875.8178527-2261-80269338669422/AnsiballZ_stat.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727875.8178527-2261-80269338669422/ /root/.ansible/tmp/ansible-tmp-1773727875.8178527-2261-80269338669422/AnsiballZ_stat.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727875.8178527-2261-80269338669422/AnsiballZ_stat.py && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/file.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmp8qkzfsgk TO /root/.ansible/tmp/ansible-tmp-1773727875.8178527-2261-80269338669422/AnsiballZ_file.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727875.8178527-2261-80269338669422/ /root/.ansible/tmp/ansible-tmp-1773727875.8178527-2261-80269338669422/AnsiballZ_file.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727875.8178527-2261-80269338669422/AnsiballZ_file.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1773727875.8178527-2261-80269338669422/ > /dev/null 2>&1 && sleep 0'
+ok: [aks-cnd-cp2-dev] => {
+    "changed": false,
+    "checksum": "e306baaf67e030a527dd6a75d6d232c002b1fd7f",
+    "dest": "/tmp/aks-deployment-azure-vote-front.yaml",
+    "diff": {
+        "after": {
+            "path": "/tmp/aks-deployment-azure-vote-front.yaml"
+        },
+        "before": {
+            "path": "/tmp/aks-deployment-azure-vote-front.yaml"
+        }
+    },
+    "gid": 0,
+    "group": "root",
+    "invocation": {
+        "module_args": {
+            "_diff_peek": null,
+            "_original_basename": "deployment.yml.j2",
+            "access_time": null,
+            "access_time_format": "%Y%m%d%H%M.%S",
+            "attributes": null,
+            "dest": "/tmp/aks-deployment-azure-vote-front.yaml",
+            "follow": true,
+            "force": false,
+            "group": null,
+            "mode": null,
+            "modification_time": null,
+            "modification_time_format": "%Y%m%d%H%M.%S",
+            "owner": null,
+            "path": "/tmp/aks-deployment-azure-vote-front.yaml",
+            "recurse": false,
+            "selevel": null,
+            "serole": null,
+            "setype": null,
+            "seuser": null,
+            "src": null,
+            "state": "file",
+            "unsafe_writes": false
+        }
+    },
+    "mode": "0644",
+    "owner": "root",
+    "path": "/tmp/aks-deployment-azure-vote-front.yaml",
+    "size": 1110,
+    "state": "file",
+    "uid": 0
+}
+Read vars_file './vars.yml'
+
+TASK [aks : Apply Deployment manifest] *****************************************
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/deploy.yml:6
+<aks-cnd-cp2-dev> ESTABLISH LOCAL CONNECTION FOR USER: root
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'echo ~root && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1773727876.174916-2297-23447828171077 `" && echo ansible-tmp-1773727876.174916-2297-23447828171077="` echo /root/.ansible/tmp/ansible-tmp-1773727876.174916-2297-23447828171077 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/command.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmp8xvt9u8u TO /root/.ansible/tmp/ansible-tmp-1773727876.174916-2297-23447828171077/AnsiballZ_command.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727876.174916-2297-23447828171077/ /root/.ansible/tmp/ansible-tmp-1773727876.174916-2297-23447828171077/AnsiballZ_command.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727876.174916-2297-23447828171077/AnsiballZ_command.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1773727876.174916-2297-23447828171077/ > /dev/null 2>&1 && sleep 0'
+changed: [aks-cnd-cp2-dev] => {
+    "changed": true,
+    "cmd": [
+        "kubectl",
+        "apply",
+        "-f",
+        "/tmp/aks-deployment-azure-vote-front.yaml"
+    ],
+    "delta": "0:00:00.844202",
+    "end": "2026-03-17 01:11:17.127275",
+    "invocation": {
+        "module_args": {
+            "_raw_params": "kubectl apply -f /tmp/aks-deployment-azure-vote-front.yaml",
+            "_uses_shell": false,
+            "argv": null,
+            "chdir": null,
+            "creates": null,
+            "executable": null,
+            "removes": null,
+            "stdin": null,
+            "stdin_add_newline": true,
+            "strip_empty_ends": true,
+            "warn": true
+        }
+    },
+    "rc": 0,
+    "start": "2026-03-17 01:11:16.283073",
+    "stderr": "",
+    "stderr_lines": [],
+    "stdout": "deployment.apps/redis unchanged\ndeployment.apps/azure-vote-front unchanged",
+    "stdout_lines": [
+        "deployment.apps/redis unchanged",
+        "deployment.apps/azure-vote-front unchanged"
+    ]
+}
+Read vars_file './vars.yml'
+
+TASK [aks : Render Service manifest] *******************************************
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/service.yml:1
+<aks-cnd-cp2-dev> ESTABLISH LOCAL CONNECTION FOR USER: root
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'echo ~root && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1773727877.1931207-2340-74021674900246 `" && echo ansible-tmp-1773727877.1931207-2340-74021674900246="` echo /root/.ansible/tmp/ansible-tmp-1773727877.1931207-2340-74021674900246 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/stat.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmpy4spnt8q TO /root/.ansible/tmp/ansible-tmp-1773727877.1931207-2340-74021674900246/AnsiballZ_stat.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727877.1931207-2340-74021674900246/ /root/.ansible/tmp/ansible-tmp-1773727877.1931207-2340-74021674900246/AnsiballZ_stat.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727877.1931207-2340-74021674900246/AnsiballZ_stat.py && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/file.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmp1c6l9msj TO /root/.ansible/tmp/ansible-tmp-1773727877.1931207-2340-74021674900246/AnsiballZ_file.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727877.1931207-2340-74021674900246/ /root/.ansible/tmp/ansible-tmp-1773727877.1931207-2340-74021674900246/AnsiballZ_file.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727877.1931207-2340-74021674900246/AnsiballZ_file.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1773727877.1931207-2340-74021674900246/ > /dev/null 2>&1 && sleep 0'
+ok: [aks-cnd-cp2-dev] => {
+    "changed": false,
+    "checksum": "7e8b286db8fe9d874c8470faa3cc2ab9fe1b0922",
+    "dest": "/tmp/aks-service-azure-vote-front.yaml",
+    "diff": {
+        "after": {
+            "path": "/tmp/aks-service-azure-vote-front.yaml"
+        },
+        "before": {
+            "path": "/tmp/aks-service-azure-vote-front.yaml"
+        }
+    },
+    "gid": 0,
+    "group": "root",
+    "invocation": {
+        "module_args": {
+            "_diff_peek": null,
+            "_original_basename": "service.yml.j2",
+            "access_time": null,
+            "access_time_format": "%Y%m%d%H%M.%S",
+            "attributes": null,
+            "dest": "/tmp/aks-service-azure-vote-front.yaml",
+            "follow": true,
+            "force": false,
+            "group": null,
+            "mode": null,
+            "modification_time": null,
+            "modification_time_format": "%Y%m%d%H%M.%S",
+            "owner": null,
+            "path": "/tmp/aks-service-azure-vote-front.yaml",
+            "recurse": false,
+            "selevel": null,
+            "serole": null,
+            "setype": null,
+            "seuser": null,
+            "src": null,
+            "state": "file",
+            "unsafe_writes": false
+        }
+    },
+    "mode": "0644",
+    "owner": "root",
+    "path": "/tmp/aks-service-azure-vote-front.yaml",
+    "size": 426,
+    "state": "file",
+    "uid": 0
+}
+Read vars_file './vars.yml'
+
+TASK [aks : Apply Service manifest] ********************************************
+task path: /mnt/c/Users/dario/Downloads/unir-cp2-main/unir-cp2-main/ansible/roles/aks/tasks/service.yml:6
+<aks-cnd-cp2-dev> ESTABLISH LOCAL CONNECTION FOR USER: root
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'echo ~root && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /root/.ansible/tmp `"&& mkdir "` echo /root/.ansible/tmp/ansible-tmp-1773727877.508612-2376-45715118960728 `" && echo ansible-tmp-1773727877.508612-2376-45715118960728="` echo /root/.ansible/tmp/ansible-tmp-1773727877.508612-2376-45715118960728 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/command.py
+<aks-cnd-cp2-dev> PUT /root/.ansible/tmp/ansible-local-1837yn61dzch/tmp9v6rj9d2 TO /root/.ansible/tmp/ansible-tmp-1773727877.508612-2376-45715118960728/AnsiballZ_command.py
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'chmod u+x /root/.ansible/tmp/ansible-tmp-1773727877.508612-2376-45715118960728/ /root/.ansible/tmp/ansible-tmp-1773727877.508612-2376-45715118960728/AnsiballZ_command.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c '/usr/bin/python3 /root/.ansible/tmp/ansible-tmp-1773727877.508612-2376-45715118960728/AnsiballZ_command.py && sleep 0'
+<aks-cnd-cp2-dev> EXEC /bin/sh -c 'rm -f -r /root/.ansible/tmp/ansible-tmp-1773727877.508612-2376-45715118960728/ > /dev/null 2>&1 && sleep 0'
+changed: [aks-cnd-cp2-dev] => {
+    "changed": true,
+    "cmd": [
+        "kubectl",
+        "apply",
+        "-f",
+        "/tmp/aks-service-azure-vote-front.yaml"
+    ],
+    "delta": "0:00:00.956942",
+    "end": "2026-03-17 01:11:18.569056",
+    "invocation": {
+        "module_args": {
+            "_raw_params": "kubectl apply -f /tmp/aks-service-azure-vote-front.yaml",
+            "_uses_shell": false,
+            "argv": null,
+            "chdir": null,
+            "creates": null,
+            "executable": null,
+            "removes": null,
+            "stdin": null,
+            "stdin_add_newline": true,
+            "strip_empty_ends": true,
+            "warn": true
+        }
+    },
+    "rc": 0,
+    "start": "2026-03-17 01:11:17.612114",
+    "stderr": "",
+    "stderr_lines": [],
+    "stdout": "service/redis unchanged\nservice/azure-vote-front unchanged",
+    "stdout_lines": [
+        "service/redis unchanged",
+        "service/azure-vote-front unchanged"
+    ]
+}
+Read vars_file './vars.yml'
+META: ran handlers
+Read vars_file './vars.yml'
+META: ran handlers
+
+PLAY RECAP *********************************************************************
+aks-cnd-cp2-dev            : ok=15   changed=6    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+

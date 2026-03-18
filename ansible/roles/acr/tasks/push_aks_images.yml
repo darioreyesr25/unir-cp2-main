@@ -1,0 +1,30 @@
+---
+- name: Pull Azure Vote Front image from Docker Hub
+  command: >
+    podman pull docker.io/jsosa15/azure-vote-front:v1
+  become: yes
+
+- name: Tag Azure Vote Front image for ACR
+  command: >
+    podman tag docker.io/jsosa15/azure-vote-front:v1 {{ acr_name }}.azurecr.io/{{ image_name_k8s_front }}:{{ image_tag_k8s_front }}
+  become: yes
+
+- name: Push Azure Vote Front image to ACR
+  command: >
+    podman push {{ acr_name }}.azurecr.io/{{ image_name_k8s_front }}:{{ image_tag_k8s_front }}
+  become: yes
+
+- name: Pull Redis image from Docker Hub
+  command: >
+    podman pull docker.io/library/redis:7.0
+  become: yes
+
+- name: Tag Redis image for ACR
+  command: >
+    podman tag docker.io/library/redis:7.0 {{ acr_name }}.azurecr.io/{{ image_name_k8s_back }}:{{ image_tag_k8s_back }}
+  become: yes
+
+- name: Push Redis image to ACR
+  command: >
+    podman push {{ acr_name }}.azurecr.io/{{ image_name_k8s_back }}:{{ image_tag_k8s_back }}
+  become: yes
