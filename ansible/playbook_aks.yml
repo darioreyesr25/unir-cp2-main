@@ -1,8 +1,0 @@
----
-- name: Deploy Application on AKS
-  hosts: azure_aks
-  gather_facts: no
-  roles:
-    - aks
-  vars_files:
-      - ./vars.yml

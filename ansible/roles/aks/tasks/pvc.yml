@@ -1,7 +1,0 @@
-- name: Render PVC manifest
-  template:
-    src: pvc.yml.j2
-    dest: "/tmp/aks-pvc-{{ pvc_name }}.yaml"
-
-- name: Apply PVC manifest
-  command: kubectl apply -f /tmp/aks-pvc-{{ pvc_name }}.yaml
