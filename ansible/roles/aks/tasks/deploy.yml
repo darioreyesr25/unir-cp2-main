@@ -1,7 +1,0 @@
-- name: Render Deployment manifest
-  template:
-    src: deployment.yml.j2
-    dest: "/tmp/aks-deployment-{{ front_deployment_name }}.yaml"
-
-- name: Apply Deployment manifest
-  command: kubectl apply -f /tmp/aks-deployment-{{ front_deployment_name }}.yaml

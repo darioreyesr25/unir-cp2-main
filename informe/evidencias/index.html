@@ -424,144 +424,6 @@
   
   
   
-    
-    
-      
-        
-          
-        
-      
-        
-      
-        
-      
-    
-    
-    
-      
-      
-        
-          
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
-        
-          
-          <div class="md-nav__link md-nav__container">
-            <a href="../arquitectura/" class="md-nav__link ">
-              
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Arquitectura
-  
-
-    
-  </span>
-  
-  
-
-            </a>
-            
-              
-              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="">
-                <span class="md-nav__icon md-icon"></span>
-              </label>
-            
-          </div>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_2">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Arquitectura
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../arquitectura/infraestructura/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Infraestructura
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../arquitectura/configuracion/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Configuración
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
       <a href="../despliegue/" class="md-nav__link">
         
@@ -951,6 +813,131 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitectura
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Arquitectura
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arquitectura/configuracion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuración de la infraestructura
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arquitectura/infraestructura/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infraestructura
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1549,10 +1536,10 @@ Changes<span class="w"> </span>to<span class="w"> </span>Outputs:
 </ul>
 <h4 id="rg-cnd-cp2-dev">rg-cnd-cp2-dev<a class="headerlink" href="#rg-cnd-cp2-dev" title="Permanent link">&para;</a></h4>
 <p>El <code>rg-cnd-cp2-dev</code> contiene todos los recursos declarados en nuestros ficheros de terraform.</p>
-<p><img alt="rg-cnd-cp2-dev" src="../../assets/images/screenshot-rg-cnd-cp2-dev.png" /></p>
+<p><img alt="rg-cnd-cp2-dev" src="../assets/images/screenshot-rg-cnd-cp2-dev.png" /></p>
 <h3 id="creacion-del-acr">Creación del ACR<a class="headerlink" href="#creacion-del-acr" title="Permanent link">&para;</a></h3>
 <p>Desde el portal de Azure podemos observar como el servicio de contenedores (ACR) se ha creado correctamente bajo los parámetros definidos en los ficheros terraform.</p>
-<p><img alt="acr" src="../../assets/images/screenshot-acr.png" /></p>
+<p><img alt="acr" src="../assets/images/screenshot-acr.png" /></p>
 <div class="highlight"><pre><span></span><code>az<span class="w"> </span>acr<span class="w"> </span>list<span class="w"> </span>--query<span class="w"> </span><span class="s2">&quot;[?name==&#39;None&#39;]&quot;</span><span class="w"> </span>--output<span class="w"> </span>table
 </code></pre></div>
 <p>Tras lanzar este comando recibimos esta salida por consola:</p>
@@ -1597,10 +1584,10 @@ Changes<span class="w"> </span>to<span class="w"> </span>Outputs:
 <p>El registro está accesible desde Internet y requiere autenticación (admin user). Las imágenes del proyecto se etiquetan con <code>casopractico2</code> y se almacenan en este ACR.</p>
 </blockquote>
 <p>También podemos comprobar que se ha creado correctamente iniciando sesión en el ACR mediante el comando <code>az acr login --name None</code> que devuelve la siguiente salida:</p>
-<p><img alt="acr-login" src="../../assets/images/screenshot-acr-login.png" /></p>
+<p><img alt="acr-login" src="../assets/images/screenshot-acr-login.png" /></p>
 <h3 id="creacion-de-la-vm">Creación de la VM<a class="headerlink" href="#creacion-de-la-vm" title="Permanent link">&para;</a></h3>
 <p>Desde el portal de Azure podemos observar como la VM se ha creado correctamente bajo los parámetros definidos en los ficheros terraform.</p>
-<p><img alt="vm" src="../../assets/images/screenshot-vm.png" /></p>
+<p><img alt="vm" src="../assets/images/screenshot-vm.png" /></p>
 <p>Para comprobar que la VM está levantada podemos acceder por ssh usando la clave pública que le pasamos en el momento del despliegue con terraform y la IP pública publicada en los outputs.</p>
 <p>La IP Pública la podemos extraer de los outputs generados de terraform</p>
 <div class="highlight"><pre><span></span><code>terraform<span class="w"> </span>output
@@ -1705,13 +1692,13 @@ Changes<span class="w"> </span>to<span class="w"> </span>Outputs:
 sible/hosts.yml<span class="w"> </span>--extra-vars<span class="w"> </span><span class="s2">&quot;@ansible/vars.yml&quot;</span><span class="w"> </span>--ask-vault-pass
 </code></pre></div>
 <p>Podemos ver como se ejecuta el rol de ACR de la carpeta Ansible ejecutando las tareas sin errores.</p>
-<p><img alt="ansible-images-logs" src="../../assets/images/screenshot-ansible-images-logs.png" /></p>
+<p><img alt="ansible-images-logs" src="../assets/images/screenshot-ansible-images-logs.png" /></p>
 <h3 id="publicacion-mediante-github-actions-fuera-de-alcance">Publicación mediante Github Actions (fuera de alcance)<a class="headerlink" href="#publicacion-mediante-github-actions-fuera-de-alcance" title="Permanent link">&para;</a></h3>
 <p>La publicación de la imagen se automatiza mediante el workflow <a href="https://github.com/darioreyesr25/unir-cp2-main/actions/workflows/publish-image-mkdocs.yml"><code>Publish mkdocs image to ACR</code></a> de GitHub Actions, que envía la imagen al Azure Container Registry (ACR). Para ello, se deben proporcionar las credenciales adecuadas y validar la ejecución del proceso.</p>
 <ol>
 <li>Ejecutar workflow y validar la correcta ejecución del job</li>
 </ol>
-<p><img alt="Workflow run" src="../../assets/images/job-logs.png" /></p>
+<p><img alt="Workflow run" src="../assets/images/job-logs.png" /></p>
 <h3 id="validacion-de-imagenes-publicadas">Validación de imagenes publicadas<a class="headerlink" href="#validacion-de-imagenes-publicadas" title="Permanent link">&para;</a></h3>
 <p>Tras publicar las imágenes por Ansible o por Github Action podremos ver los repositorios en <code>Services/Repositories</code> en el recurso del ACR.</p>
 <p>También podemos ejectuar el siguiente comando desde local para listar las imágenes del ACR.</p>
@@ -1719,9 +1706,9 @@ sible/hosts.yml<span class="w"> </span>--extra-vars<span class="w"> </span><span
 </code></pre></div>
 <p><img alt="screenshot-acr-list" src="../../assets/images/screenshot-acr-list.png" /></p>
 <h4 id="imagen-docs-nginx">Imagen <code>docs-nginx</code><a class="headerlink" href="#imagen-docs-nginx" title="Permanent link">&para;</a></h4>
-<p><img alt="screenshot-docs-nginx-image" src="../../assets/images/screenshot-docs-nginx-image.png" /></p>
+<p><img alt="screenshot-docs-nginx-image" src="../assets/images/screenshot-docs-nginx-image.png" /></p>
 <h4 id="imagen-azure-vote-front">Imagen <code>azure-vote-front</code><a class="headerlink" href="#imagen-azure-vote-front" title="Permanent link">&para;</a></h4>
-<p><img alt="screenshot-azure-vote-front-image" src="../../assets/images/screenshot-web-vote-front-aks.png" /></p>
+<p><img alt="screenshot-azure-vote-front-image" src="../assets/images/screenshot-web-vote-front-aks.png" /></p>
 <h2 id="despliegue-en-la-vm">Despliegue en la VM<a class="headerlink" href="#despliegue-en-la-vm" title="Permanent link">&para;</a></h2>
 <p>Para desplegar la imagen de mkdocs-nginx en un contendor sobre la máquina virtual ejecutamos el siguiente playbook que contiene el rol <code>vm</code>.</p>
 <div class="highlight"><pre><span></span><code>ansible-playbook<span class="w"> </span>ansible/playbook.yml<span class="w"> </span>-i<span class="w"> </span>ansible/hosts.yml<span class="w"> </span>--extra-vars<span class="w"> </span><span class="s2">&quot;@ansible/vars.yml&quot;</span><span class="w"> </span>--ask-vault-pass
@@ -1730,7 +1717,7 @@ sible/hosts.yml<span class="w"> </span>--extra-vars<span class="w"> </span><span
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-k<span class="w"> </span>-u<span class="w"> </span>darioreyesr25:***<span class="w"> </span>https://20.151.118.193:443
 </code></pre></div>
 <p>También puede visualizarse en el browser en la dirección <code>https://ip-publica/</code>.</p>
-<p><img alt="acceso-vm-docs" src="../../assets/images/acceso-vm-docs-ip-publica.png" /></p>
+<p><img alt="acceso-vm-docs" src="../assets/images/acceso-vm-docs-ip-publica.png" /></p>
 <p>Si introducimos el usuario y la contraseña tendremos acceso a la web de la imagen de `` levantada en la IP pública de la VM.</p>
 <p><img alt="web-nginx" src="../../assets/images/screenshot-web-mkdocs.png" /></p>
 <h2 id="despliegue-en-el-aks">Despliegue en el AKS<a class="headerlink" href="#despliegue-en-el-aks" title="Permanent link">&para;</a></h2>
@@ -1776,7 +1763,7 @@ azure-vote-front    LoadBalancer   10.0.247.243   &lt;pending&gt;       80:30983
 <div class="highlight"><pre><span></span><code>HTTP server started: http://localhost:80
 </code></pre></div>
 <p>Por tanto, accediendo desde el navegador a la IP pública que devuelva el servicio (<code>kubectl get svc -n cp2 azure-vote-front</code>) se podrá visualizar la aplicación.</p>
-<p><img alt="web-aks-azure-vote" src="../../assets/images/screenshot-web-vote-front-aks.png" /></p>
+<p><img alt="web-aks-azure-vote" src="../assets/images/screenshot-web-vote-front-aks.png" /></p>
 <p>Esto confirma que el despliegue en AKS se ha realizado con éxito, con el contenedor sirviendo desde la imagen publicada en el ACR.</p>
 <h3 id="comprobacion-de-persistencia">Comprobación de persistencia<a class="headerlink" href="#comprobacion-de-persistencia" title="Permanent link">&para;</a></h3>
 <p>Para validar que el contenedor desplegado en AKS cuenta con almacenamiento persistente, se realiza la siguiente prueba:</p>
@@ -1787,7 +1774,7 @@ azure-vote-front    LoadBalancer   10.0.247.243   &lt;pending&gt;       80:30983
 <div class="highlight"><pre><span></span><code><span class="gh"># Persistencia en AKS</span>
 <span class="ge">_“Este contenido debe sobrevivir al reinicio del pod.”_</span>
 </code></pre></div>
-<p><img alt="web-aks-azure-vote" src="../../assets/images/screenshot-web-vote-front-aks.png" /></p>
+<p><img alt="web-aks-azure-vote" src="../assets/images/screenshot-web-vote-front-aks.png" /></p>
 <ol>
 <li><strong>Eliminar el pod</strong> para forzar su recreación automática por Kubernetes:</li>
 </ol>
@@ -1799,7 +1786,7 @@ azure-vote-front    LoadBalancer   10.0.247.243   &lt;pending&gt;       80:30983
 <li><strong>Actualizar la página web</strong> tras unos segundos.
 La entrada debería seguir estando presente, lo que confirma que el volumen persistente está funcionando correctamente.</li>
 </ol>
-<p><img alt="web-aks-azure-vote" src="../../assets/images/screenshot-web-vote-front-aks.png" /></p>
+<p><img alt="web-aks-azure-vote" src="../assets/images/screenshot-web-vote-front-aks.png" /></p>
 
 
 
